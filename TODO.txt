@@ -1,0 +1,5 @@
+
+IDEEN:
+- Timer startet wenn block abgebaut wird
+
+- Timer all leaven stoppen
