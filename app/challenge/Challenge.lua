@@ -13,13 +13,12 @@
 local Challenge = {}
 Challenge.__index = Challenge
 
-function Challenge.new(id, enabled)
+function Challenge.new(id)
     local self = setmetatable({}, Challenge)
 
     self.id = id
 
     self.enabled = false
-    self:setEnabled(enabled)
 
     return self
 end

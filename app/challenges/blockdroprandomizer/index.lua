@@ -2,10 +2,32 @@ local Material = classFor("org.bukkit.Material")
 local ItemStack = classFor("org.bukkit.inventory.ItemStack")
 local BlockBreakEvent = classFor("org.bukkit.event.block.BlockBreakEvent")
 
+local Storage = require("app/util/Storage")
+
 
 ---@param challenge app.challenge.Challenge
 return function(challenge)
     local cache = {}
+
+    local storage = Storage.new("challenges-"..challenge.id)
+
+    storage:loadSave(function()
+        storage:set("cache", nil)
+        for id, material in pairs(cache) do
+            storage:set("cache."..id, material.name())
+        end
+    end)
+    do
+        local keys = storage:getKeys("cache")
+        if keys ~= nil then
+            for id in forEach(keys) do
+                local materialStr = storage:get("cache."..id)
+                local material = Material.valueOf(materialStr)
+                cache[id] = material
+            end
+        end
+    end
+
     local availableMaterials = {}
 
     for material in forEach(Material.values()) do

@@ -4,7 +4,7 @@ local timer = require("app/sys/timer")
 -- local FORMAT_RUNNING = "<gradient:#707CF7:#F658CF:$offset><b>$time</gradient>"
 -- local FORMAT_PAUSED = "<gradient:#5D67CB:#A63D8C:$offset><b>$time</gradient>"
 local FORMAT_RUNNING = "<gradient:#F4FDFF:#797977:$offset><b>$time</gradient>"
-local FORMAT_PAUSED = "<gradient:#6D6E6B:#121211:$offset><b>$time</gradient>"
+local FORMAT_PAUSED = "<gradient:#d9e1e3:#6b6b69:$offset><b>$time</gradient>"
 
 
 -- Von -1 bis 1

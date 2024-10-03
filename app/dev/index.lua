@@ -17,7 +17,7 @@ addCommand("dev", function(sender, args)
             return
         end
 
-        it[id] = require("smp/dev/it/"..id)
+        it[id] = require("app/dev/it/"..id)
         it[i] = nil
     end
 

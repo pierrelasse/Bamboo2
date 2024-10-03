@@ -39,11 +39,14 @@ function Storage:save()
     end
 end
 
-function Storage:loadSave()
+function Storage:loadSave(saveCb)
     logger:debug("loading '"..self.name.."'")
     self:load()
     addEvent(ScriptStoppingEvent, function()
         logger:debug("saving '"..self.name.."'")
+        if saveCb ~= nil then
+            saveCb()
+        end
         self:save()
     end)
 end
@@ -77,6 +80,13 @@ function Storage:getKeys(path)
     local section = self.config.getConfigurationSection(path)
     if section ~= nil then
         return section.getKeys(false)
+    end
+end
+
+function Storage:getValues(path)
+    local section = self.config.getConfigurationSection(path)
+    if section ~= nil then
+        return section.getValues(false)
     end
 end
 
