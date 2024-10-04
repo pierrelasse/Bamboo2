@@ -4,3 +4,6 @@ IDEEN:
 - Projekte. Welten und Konfigurationen laden (und speichern)
 
 - Timer all leaven stoppen
+
+Regel ideen:
+- regel...

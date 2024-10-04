@@ -1,0 +1,1 @@
+'/c/Program Files/Java/openjdk-21.0.2/bin/javac.exe' --release 8 -g:none -cp 'd:/dev/bluept/scripting/libs/*;d:/Dev/BluePT/Scripting/build/libs/Scripting.jar' -Xlint:-options -d '..' app_challenges_dev_worldgen_Generator.java

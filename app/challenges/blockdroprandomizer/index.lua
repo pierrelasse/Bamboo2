@@ -7,6 +7,9 @@ local Storage = require("app/util/Storage")
 
 ---@param challenge app.challenge.Challenge
 return function(challenge)
+    challenge.meta_name = "BlockDropRandomizer"
+    challenge.meta_material = "DROPPER"
+
     local cache = {}
 
     local storage = Storage.new("challenges-"..challenge.id)

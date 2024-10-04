@@ -3,6 +3,9 @@
 ---@field enabled boolean = false
 ---@field events ScriptEvent[]|nil
 ---
+---@field meta_name string|nil
+---@field meta_material string|nil
+---
 ---@field onLoad fun(path: string)|nil
 ---@field onSave fun(path: string)|nil
 ---

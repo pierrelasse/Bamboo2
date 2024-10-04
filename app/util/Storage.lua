@@ -95,7 +95,6 @@ function Storage:clearIfEmpty(path)
     local keys = self:getKeys(path)
     if keys ~= nil and keys.size() == 0 then
         self:set(path, nil)
-        print("clearing ", path)
     end
 end
 

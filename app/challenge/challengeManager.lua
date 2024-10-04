@@ -1,5 +1,7 @@
 local CHALLENGE_IDS = {
-    "blockdroprandomizer"
+    "blockdroprandomizer",
+    "dev-worldgen",
+    "mobbattlearenaamendedesspiels"
 }
 
 local Storage = require("app/util/Storage")
