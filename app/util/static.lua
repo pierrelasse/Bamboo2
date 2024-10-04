@@ -19,3 +19,11 @@ function BroadcastActionBar(input)
         player.sendActionBar(component)
     end
 end
+
+---@param player JavaObject
+---@param sound string
+---@param pitch number? 0-1
+---@param volume number? 0-1
+function PlaySound(player, sound, pitch, volume)
+    player.playSound(player.getLocation(), sound, volume or 1, pitch or 1)
+end

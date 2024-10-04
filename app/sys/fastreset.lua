@@ -57,6 +57,8 @@ function FastReset(sender)
     if resetting or not sender.isOnline() then return end
     resetting = true
 
+    Timer.reset()
+
     BroadcastActionBar("Reset von "..sender.getName().." veranlasst")
 
     for player in forEach(Bukkit.getOnlinePlayers()) do
@@ -133,8 +135,6 @@ function FastReset(sender)
     fs.remove(fs.file(mainWorldFolder, "stats"), true)
 
     moveEvent.unregister()
-
-    Timer.reset()
 
     resetting = false
 end

@@ -1,6 +1,7 @@
 local CHALLENGE_IDS = {
     "blockdroprandomizer",
     "dev-worldgen",
+    "minecraftaberalle30sekundenkommentntminecarts",
     "mobbattlearenaamendedesspiels"
 }
 

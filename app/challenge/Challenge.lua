@@ -2,6 +2,7 @@
 ---@field id string?
 ---@field enabled boolean = false
 ---@field events ScriptEvent[]|nil
+---@field tasks table<string, function>|nil
 ---
 ---@field meta_name string|nil
 ---@field meta_material string|nil
@@ -83,11 +84,16 @@ end
 ---@param eventClass T The class of the event.
 ---@param handler fun(event: T) The event handler.
 function Challenge:addEvent(eventClass, handler)
-    if self.events == nil then
-        self.events = {}
-    end
+    if self.events == nil then self.events = {} end
     self.events[#self.events + 1] =
         addEvent(eventClass, handler, false)
+end
+
+---@param id string
+---@param handler fun(sender: JavaObject, args: string[])
+function Challenge:addTask(id, handler)
+    if self.tasks == nil then self.tasks = {} end
+    self.tasks[id] = handler
 end
 
 return Challenge

@@ -16,7 +16,7 @@ local ITM_RIGHT = screens.item(
 )
 
 
-local function view(player, page)
+local function view(player, prevScreenFunc, page)
     page = page or 1
 
     local ITEM_SLOTS = { 2, 3, 4, 5, 6 }
@@ -24,9 +24,17 @@ local function view(player, page)
     local challengesIds = table.keys(challengeManager.challenges)
     local currId = 1 + (#ITEM_SLOTS * (page - 1))
 
+    local maxPages = table.length(challengesIds) / #ITEM_SLOTS
+
     local screen = screens.makeScreen("§lModifikationen", 9 * 1)
 
-    screens.button(screen, 0, ITM_LEFT, function() end)
+    screens.button(screen, 0, ITM_LEFT, function()
+        if page == 1 then
+            prevScreenFunc(player)
+        else
+            view(player, prevScreenFunc, page - 1)
+        end
+    end)
 
     for offset = 0, #ITEM_SLOTS - 1 do
         local slot = 2 + offset
@@ -52,7 +60,11 @@ local function view(player, page)
         end
     end
 
-    screens.button(screen, 8, ITM_RIGHT, function() end)
+    screens.button(screen, 8, ITM_RIGHT, function()
+        if page <= maxPages then
+            view(player, prevScreenFunc, page + 1)
+        end
+    end)
 
     screen:open(player)
 end

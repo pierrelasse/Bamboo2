@@ -1,5 +1,6 @@
 local it = {
     "MINIMESSAGE",
+    "SOUNDCHECK",
 }
 
 addCommand("dev", function(sender, args)

@@ -10,12 +10,12 @@ local function view(player)
 
     screens.button(screen, 1, screens.item("COMPARATOR", "§f§lRegeln"), function()
         player.sendMessage(I18n.g("menu", "rules"))
-        view_rules(player)
+        view_rules(player, view)
     end)
 
     screens.button(screen, 3, screens.item("BOOKSHELF", "§f§lModifikationen"), function()
         player.sendMessage(I18n.g("menu", "modifications"))
-        view_challenges(player)
+        view_challenges(player, view)
     end)
 
     screen:open(player)

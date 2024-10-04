@@ -1,1 +1,1 @@
-{"lastCheck":1728045826826,"packages":{"core":{"ver":7},"worldmanager":{"ver":4,"dep":["core/classloader"]},"extra/sendActionBar":{"ver":3,"sin":true},"extra/guimaker":{"ver":1},"base":{"ver":8},"extra/bukkitVersion":{"ver":2,"sin":true},"core/classloader":{"ver":1,"sin":true}}}
+{"lastCheck":1728065601560,"packages":{"core":{"ver":7},"worldmanager":{"ver":4,"dep":["core/classloader"]},"extra/sendActionBar":{"ver":3,"sin":true},"extra/guimaker":{"ver":1},"base":{"ver":8},"extra/bukkitVersion":{"ver":2,"sin":true},"core/classloader":{"ver":1,"sin":true}}}

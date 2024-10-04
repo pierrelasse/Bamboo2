@@ -12,10 +12,12 @@ local ITM_RIGHT = screens.item(
 )
 
 
-local function view(player)
+local function view(player, prevScreenFunc)
     local screen = screens.makeScreen("§lRegeln", 9 * 1)
 
-    screens.button(screen, 0, ITM_LEFT, function() end)
+    screens.button(screen, 0, ITM_LEFT, function()
+        prevScreenFunc(player)
+     end)
 
     for i = 2, 6 do
         screen:set(i, nil)

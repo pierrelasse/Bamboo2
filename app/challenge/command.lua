@@ -14,6 +14,12 @@ addCommand("challenges", function(sender, args)
     end
 
     local action = args[2]
+    if action == nil then
+        local msg = "§l"..challenge.id.."§8:"
+        msg = msg.."\n §7Status: "..(challenge.enabled and "§aAktiv" or "§cInaktiv")
+        sender.sendMessage(msg)
+        return
+    end
 
     if action == "enable" then
         if challenge:setEnabled(true) then
@@ -35,9 +41,21 @@ addCommand("challenges", function(sender, args)
         return
     end
 
-    local msg = "§l"..challenge.id.."§8:"
-    msg = msg.."\n §7Status: "..(challenge.enabled and "§aAktiv" or "§cInaktiv")
-    sender.sendMessage(msg)
+    if string.startswith(action, ":") then
+        local handler
+        if challenge.tasks ~= nil then
+            local id = string.sub(action, 2)
+            handler = challenge.tasks[id]
+        end
+        if handler == nil then
+            sender.sendMessage("§cTask nicht gefunden")
+            return
+        end
+        handler(sender, args)
+        return
+    end
+
+    sender.sendMessage("§cAktion nicht gefunden")
 end).permission("op")
     .complete(function(completions, sender, args)
         if #args == 1 then
@@ -48,5 +66,12 @@ end).permission("op")
             completions.add("enable")
             completions.add("disable")
             completions.add("reset")
+
+            local challengeId = args[1]
+            local challenge = challengeManager.challenges[challengeId]
+            if challenge == nil or challenge.tasks == nil then return end
+            for id, _ in pairs(challenge.tasks) do
+                completions.add(":"..id)
+            end
         end
     end)

@@ -8,7 +8,7 @@ paman.need("worldmanager")
 require("@core/util/string")
 require("@core/util/table")
 
-require("app/util/util")
+require("app/util/static")
 
 require("app/i18n")
 
@@ -25,7 +25,7 @@ require("app/sys/timerCommand")
 require("app/sys/timerDisplay")
 
 require("app/challenge/challengeManager").loadChallenges()
-require("app/challenge/testcmd")
+require("app/challenge/command")
 
 require("app/dev/index")
 
