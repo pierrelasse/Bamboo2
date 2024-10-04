@@ -11,7 +11,8 @@
 ---@class ScriptEvent: JavaObject
 ---@field ignoreCancelled boolean Specifies whether the event handler should be invoked if the event has been cancelled by a previous handler.
 ---@field priority fun(priority: integer|JavaObject):ScriptEvent Set the priority of the event. Name or id can be used. Priorites: LOWEST(0), LOW(1), NORMAL(2), HIGH(3), HIGHEST(4), MONITOR(5)
----@field unregister fun() Unregisters the event.
+---@field register fun() Registers the event handler.
+---@field unregister fun() Unregisters the event handler.
 
 ---@class ScriptCommand: JavaObject
 ---Sets the tab completion handler
@@ -63,9 +64,9 @@ function makeArray(type, length, ...) end
 ---@generic T : JavaObject
 ---@param eventClass T The class of the event.
 ---@param handler fun(event: T) The event handler.
----@param priority number? The priority of the event handler.
+---@param register boolean? = true. If the event handler should be registered.
 ---@return ScriptEvent event
-function addEvent(eventClass, handler, priority) end
+function addEvent(eventClass, handler, register) end
 
 ---Registers a new command.
 ---

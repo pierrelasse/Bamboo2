@@ -6,10 +6,11 @@ local fs = require("@base/fs")
 local logger = require("app/util/logger").new("Storage")
 
 
----@class smp.Storage
+---@class app.util.Storage
 ---@field name string
 ---@field file JavaObject java.io.File
 ---@field config JavaObject
+---@field saveCb fun()|nil
 local Storage = {}
 Storage.__index = Storage
 
@@ -34,6 +35,8 @@ function Storage:load()
 end
 
 function Storage:save()
+    if self.saveCb ~= nil then self.saveCb() end
+
     if self.file.isFile() or not self.file.exists() then
         self.config.save(self.file)
     end
@@ -42,11 +45,9 @@ end
 function Storage:loadSave(saveCb)
     logger:debug("loading '"..self.name.."'")
     self:load()
+    self.saveCb = saveCb
     addEvent(ScriptStoppingEvent, function()
         logger:debug("saving '"..self.name.."'")
-        if saveCb ~= nil then
-            saveCb()
-        end
         self:save()
     end)
 end
@@ -87,6 +88,14 @@ function Storage:getValues(path)
     local section = self.config.getConfigurationSection(path)
     if section ~= nil then
         return section.getValues(false)
+    end
+end
+
+function Storage:clearIfEmpty(path)
+    local keys = self:getKeys(path)
+    if keys ~= nil and keys.size() == 0 then
+        self:set(path, nil)
+        print("clearing ", path)
     end
 end
 

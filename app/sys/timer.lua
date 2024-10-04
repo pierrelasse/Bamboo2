@@ -1,7 +1,4 @@
-local ScriptStoppingEvent = classFor("net.bluept.scripting.ScriptStoppingEvent")
-
 local storage = require("app/util/Storage").new("timer")
-storage:load()
 
 
 Timer = {
@@ -9,7 +6,7 @@ Timer = {
     task = nil,
 
     ---@type integer
-    time = storage:get("time", 0)
+    time = nil
 }
 
 function Timer.tick()
@@ -38,11 +35,11 @@ function Timer.reset()
     Timer.time = 0
 end
 
-addEvent(ScriptStoppingEvent, function()
+storage:loadSave(function()
     storage:set("time", Timer.time)
     storage:set("running", Timer.isRunning())
-    storage:save()
 end)
+Timer.time = storage:get("time", 0)
 
 if storage:get("running") == true then
     Timer.start()

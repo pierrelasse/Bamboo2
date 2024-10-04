@@ -8,6 +8,7 @@ local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
 local worldmanager = require("@worldmanager/worldmanager")
+local challengeManager = require("app/challenge/challengeManager")
 
 local resetting = false
 
@@ -18,6 +19,9 @@ local fakeWorld = worldmanager.get(FAKE_WORLD_ID)
 if fakeWorld == nil then
     print("creating game world")
     local creator = worldmanager.create(FAKE_WORLD_ID)
+    if challengeManager.worldGenOverworld ~= nil then
+        creator:setGenerator(challengeManager.worldGenOverworld)
+    end
     fakeWorld = creator:create()
 end
 local awaitLocation = Location(mainWorld, 0, -10000, 0, 0, 90)
@@ -50,7 +54,7 @@ end)
 
 
 function FastReset(sender)
-    if resetting then return end
+    if resetting or not sender.isOnline() then return end
     resetting = true
 
     BroadcastActionBar("Reset von "..sender.getName().." veranlasst")
@@ -93,6 +97,9 @@ function FastReset(sender)
         doTitle(3, 6)
         local creator = worldmanager.create("world_nether")
         creator:setEnvironment(-1)
+        if challengeManager.worldGenNether ~= nil then
+            creator:setGenerator(challengeManager.worldGenNether)
+        end
         creator:create()
     end
     doTitle(4, 6)
@@ -101,6 +108,9 @@ function FastReset(sender)
         doTitle(5, 6)
         local creator = worldmanager.create("world_the_end")
         creator:setEnvironment(1)
+        if challengeManager.worldGenEnd ~= nil then
+            creator:setGenerator(challengeManager.worldGenEnd)
+        end
         creator:create()
     end
     doTitle(6, 6)

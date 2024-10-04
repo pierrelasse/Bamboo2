@@ -31,109 +31,91 @@ function Creator.new(name)
     return self
 end
 
----
 ---@return number seed
 function Creator:getSeed()
     return self.worldCreator.seed()
 end
 
----
 ---@param seed number
 function Creator:setSeed(seed)
     self.worldCreator.seed(seed)
 end
 
----
 ---@return number environment
 function Creator:getEnvironment()
     return self.worldCreator.environment()
 end
 
----
 ---@param environment number
 function Creator:setEnvironment(environment)
     self.worldCreator.environment(World_Environment.getEnvironment(environment))
 end
 
----
 ---@return string type
 function Creator:getType()
     return self.worldCreator.type()
 end
 
----
 ---@param type string
 function Creator:setType(type)
     self.worldCreator.type(WorldType.getByName(type))
 end
 
----
----@return JavaObject generator
+---@return JavaObject|nil generator
 function Creator:getGenerator()
     return self.worldCreator.generator()
 end
 
----
----@param generator JavaObject|string
+---@param generator JavaObject|nil org.bukkit.generator.ChunkGenerator
 function Creator:setGenerator(generator)
     self.worldCreator.generator(generator)
 end
 
----
----@return JavaObject biomeProvider
+---@return JavaObject|nil biomeProvider org.bukkit.generator.BiomeProvider
 function Creator:getBiomeProvider()
     return self.worldCreator.biomeProvider()
 end
 
----
----@param biomeProvider JavaObject|string
+---@param biomeProvider JavaObject|nil org.bukkit.generator.BiomeProvider
 function Creator:setBiomeProvider(biomeProvider)
     self.worldCreator.biomeProvider(biomeProvider)
 end
 
----
 ---@return string
 function Creator:getGeneratorSettings()
     return self.worldCreator.generatorSettings()
 end
 
----
 ---@param generatorSettings string
 function Creator:setGeneratorSettings(generatorSettings)
     self.worldCreator.generatorSettings(generatorSettings)
 end
 
----
 ---@return boolean
 function Creator:getGenerateStructures()
     return self.worldCreator.generateStructures()
 end
 
----
 ---@param generate boolean
 function Creator:setGenerateStructures(generate)
     self.worldCreator.generateStructures(generate)
 end
 
----
 ---@return boolean
 function Creator:getHardcore()
     return self.worldCreator.hardcore()
 end
 
----
 ---@param hardcore boolean
 function Creator:setHardcore(hardcore)
     self.worldCreator.hardcore(hardcore)
 end
 
----
 ---@return boolean
 function Creator:getKeepSpawnInMemory()
     return self.worldCreator.keepSpawnInMemory()
 end
 
----
 ---@param keepSpawnInMemory boolean
 function Creator:setKeepSpawnInMemory(keepSpawnInMemory)
     self.worldCreator.keepSpawnInMemory(keepSpawnInMemory)
@@ -159,7 +141,6 @@ function Creator:setupVoid()
     return generator
 end
 
----
 ---@return JavaObject world org.bukkit.World
 function Creator:create()
     return self.worldCreator.createWorld()
