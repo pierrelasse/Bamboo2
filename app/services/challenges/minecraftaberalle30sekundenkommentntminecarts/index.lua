@@ -2,21 +2,23 @@ local Bukkit = classFor("org.bukkit.Bukkit")
 local ExplosiveMinecart = classFor("org.bukkit.entity.minecart.ExplosiveMinecart")
 
 
----@param challenge app.challenge.Challenge
-return function(challenge)
-    challenge.meta_name = "Minecraft Aber Alle 30 Sekunden Kommen TNT Minecarts"
-    challenge.meta_material = "TNT_MINECART"
+---@param service app.Service
+return function(service)
+    service.meta_type = "challenge"
+    service.meta_name = "Minecraft Aber Alle 30 Sekunden Kommen TNT Minecarts"
+    service.meta_material = "TNT_MINECART"
 
     ---@type ScriptTask
     local task
     local time = 0
+    local INTERVAL = 30
 
-    challenge.onEnable = function()
+    service.onEnable = function()
         task = every(20, function()
             if not Timer.isRunning() then return end
             time = time + 1
 
-            if time >= 60 then
+            if time >= INTERVAL then
                 time = 0
 
                 for player in forEach(Bukkit.getOnlinePlayers()) do
@@ -32,12 +34,20 @@ return function(challenge)
         end)
     end
 
-    challenge.onDisable = function()
+    service.onDisable = function()
         task.cancel()
         time = 0
     end
 
-    challenge:addTask("test", function(sender, args)
-        sender.sendMessage("testt!!")
+    service.onReset = function()
+        time = 0
+    end
+
+    service:addTask("get_time", function(sender)
+        sender.sendMessage("§7Time: §e"..time.."/"..INTERVAL)
+    end)
+
+    service:addTask("now", function(sender)
+        time = INTERVAL
     end)
 end

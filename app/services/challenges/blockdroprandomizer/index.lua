@@ -5,14 +5,15 @@ local BlockBreakEvent = classFor("org.bukkit.event.block.BlockBreakEvent")
 local Storage = require("app/util/Storage")
 
 
----@param challenge app.challenge.Challenge
-return function(challenge)
-    challenge.meta_name = "BlockDropRandomizer"
-    challenge.meta_material = "DROPPER"
+---@param service app.Service
+return function(service)
+    service.meta_type = "challenge"
+    service.meta_name = "BlockDropRandomizer"
+    service.meta_material = "DROPPER"
 
     local cache = {}
 
-    local storage = Storage.new("challenges-"..challenge.id)
+    local storage = Storage.new("services-"..service.id)
 
     storage:loadSave(function()
         storage:set("cache", nil)
@@ -39,13 +40,13 @@ return function(challenge)
         end
     end
 
-    function challenge.onReset()
+    function service.onReset()
         cache = {}
     end
 
     ---@type ScriptEvent
     local ev
-    function challenge.onEnable()
+    function service.onEnable()
         ev = addEvent(BlockBreakEvent, function(event)
             event.setDropItems(false)
 
@@ -63,7 +64,7 @@ return function(challenge)
         end)
     end
 
-    function challenge.onDisable()
+    function service.onDisable()
         ev.unregister()
     end
 end

@@ -24,8 +24,8 @@ require("app/sys/timer")
 require("app/sys/timerCommand")
 require("app/sys/timerDisplay")
 
-require("app/challenge/challengeManager").loadChallenges()
-require("app/challenge/command")
+require("app/service/serviceManager").load()
+require("app/service/command")
 
 require("app/dev/index")
 

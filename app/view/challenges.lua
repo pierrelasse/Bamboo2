@@ -1,8 +1,5 @@
-local Material = classFor("org.bukkit.Material")
-local ItemStack = classFor("org.bukkit.inventory.ItemStack")
-
-local challengeManager = require("app/challenge/challengeManager")
 local screens = require("app/util/screens")
+local paginator = require("app/view/_paginator")
 
 
 local ITM_LEFT = screens.item(
@@ -16,17 +13,38 @@ local ITM_RIGHT = screens.item(
 )
 
 
+---@param player JavaObject
+---@param prevScreenFunc fun(player: JavaObject)
+---@param page integer|nil
 local function view(player, prevScreenFunc, page)
     page = page or 1
 
-    local ITEM_SLOTS = { 2, 3, 4, 5, 6 }
+    local screen = screens.makeScreen("§lModifikationen ("..page..")", 9 * 1)
 
-    local challengesIds = table.keys(challengeManager.challenges)
-    local currId = 1 + (#ITEM_SLOTS * (page - 1))
+    local maxPages = paginator(
+        { 2, 3, 4, 5, 6 },
+        page,
+        function(service) return service.meta_type == "challenge" end,
+        function(slot, service)
+            if service == nil then
+                screen:set(slot, nil)
+                return
+            end
 
-    local maxPages = table.length(challengesIds) / #ITEM_SLOTS
+            local material = service.meta_material or "SPONGE"
+            local name = (service.enabled and "§a" or "§c")..(service.meta_name or service.id)
+            local lore = {}
 
-    local screen = screens.makeScreen("§lModifikationen", 9 * 1)
+            local itemStack = screens.item(material, name, lore)
+            screens.button(screen, slot, itemStack, function(event)
+                if event.type == "LEFT" then
+                    service:setEnabled(not service.enabled)
+                    view(player, prevScreenFunc, page)
+                elseif event.type == "RIGHT" then
+                end
+            end)
+        end
+    )
 
     screens.button(screen, 0, ITM_LEFT, function()
         if page == 1 then
@@ -35,30 +53,6 @@ local function view(player, prevScreenFunc, page)
             view(player, prevScreenFunc, page - 1)
         end
     end)
-
-    for offset = 0, #ITEM_SLOTS - 1 do
-        local slot = 2 + offset
-        local idIndex = currId + offset
-        local challengeId = challengesIds[idIndex]
-        if challengeId == nil then
-            screen:set(slot, nil)
-        else
-            local challenge = challengeManager.challenges[challengeId]
-
-            local material = challenge.meta_material or "SPONGE"
-            local name = (challenge.enabled and "§a" or "§c")..(challenge.meta_name or challenge.id)
-            local lore = {}
-
-            local itemStack = screens.item(material, name, lore)
-            screens.button(screen, slot, itemStack, function(event)
-                if event.type == "LEFT" then
-                    challenge:setEnabled(not challenge.enabled)
-                    view(player, page)
-                elseif event.type == "RIGHT" then
-                end
-            end)
-        end
-    end
 
     screens.button(screen, 8, ITM_RIGHT, function()
         if page <= maxPages then

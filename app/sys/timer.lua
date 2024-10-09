@@ -1,3 +1,4 @@
+local serviceManager = require("app/service/serviceManager")
 local storage = require("app/util/Storage").new("timer")
 
 
@@ -20,6 +21,12 @@ end
 function Timer.start()
     if Timer.task == nil then
         Timer.task = every(20, Timer.tick)
+
+        for _, service in pairs(serviceManager.entries) do
+            if service.onTimer ~= nil and service.enabled then
+                service.onTimer(true)
+            end
+        end
     end
 end
 
@@ -27,6 +34,12 @@ function Timer.stop()
     if Timer.task ~= nil then
         Timer.task.cancel()
         Timer.task = nil
+
+        for _, service in pairs(serviceManager.entries) do
+            if service.onTimer ~= nil and service.enabled then
+                service.onTimer(false)
+            end
+        end
     end
 end
 

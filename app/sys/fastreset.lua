@@ -8,7 +8,7 @@ local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
 local worldmanager = require("@worldmanager/worldmanager")
-local challengeManager = require("app/challenge/challengeManager")
+local serviceManager = require("app/service/serviceManager")
 
 local resetting = false
 
@@ -19,8 +19,8 @@ local fakeWorld = worldmanager.get(FAKE_WORLD_ID)
 if fakeWorld == nil then
     print("creating game world")
     local creator = worldmanager.create(FAKE_WORLD_ID)
-    if challengeManager.worldGenOverworld ~= nil then
-        creator:setGenerator(challengeManager.worldGenOverworld)
+    if serviceManager.worldGenOverworld ~= nil then
+        creator:setGenerator(serviceManager.worldGenOverworld)
     end
     fakeWorld = creator:create()
 end
@@ -36,7 +36,11 @@ addEvent(PlayerPortalEvent, function(event)
 end)
 
 addEvent(PlayerRespawnEvent, function(event)
-    event.setRespawnLocation(fakeWorld.getSpawnLocation())
+    if event.getRespawnLocation().getWorld() == mainWorld then
+        event.setRespawnLocation(fakeWorld.getSpawnLocation().clone().add(.5, 0, .5))
+        print("??")
+    end
+    print("ee")
 end)
 
 addEvent(PlayerJoinEvent, function(event)
@@ -47,7 +51,9 @@ addEvent(PlayerJoinEvent, function(event)
     end
 
     if not player.hasPlayedBefore() then
-        player.teleport(fakeWorld.getSpawnLocation())
+        local loc = fakeWorld.getSpawnLocation().clone().add(.5, 0, .5)
+        player.setRespawnLocation(loc)
+        player.teleport(loc)
         player.resetTitle()
     end
 end)
@@ -99,8 +105,8 @@ function FastReset(sender)
         doTitle(3, 6)
         local creator = worldmanager.create("world_nether")
         creator:setEnvironment(-1)
-        if challengeManager.worldGenNether ~= nil then
-            creator:setGenerator(challengeManager.worldGenNether)
+        if serviceManager.worldGenNether ~= nil then
+            creator:setGenerator(serviceManager.worldGenNether)
         end
         creator:create()
     end
@@ -110,8 +116,8 @@ function FastReset(sender)
         doTitle(5, 6)
         local creator = worldmanager.create("world_the_end")
         creator:setEnvironment(1)
-        if challengeManager.worldGenEnd ~= nil then
-            creator:setGenerator(challengeManager.worldGenEnd)
+        if serviceManager.worldGenEnd ~= nil then
+            creator:setGenerator(serviceManager.worldGenEnd)
         end
         creator:create()
     end

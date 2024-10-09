@@ -1,12 +1,15 @@
 local it = {
+    "DISPLAYFUNNYTITLE",
+    "DYNCMD",
     "MINIMESSAGE",
+    "MULTI_ASYNC",
     "SOUNDCHECK",
 }
 
 addCommand("dev", function(sender, args)
     local id = args[1]
     if id == nil then
-        sender.sendMessage("§cUsage: /dev <id>")
+        sender.sendMessage "§cUsage: /dev <id>"
         return
     end
 
@@ -14,7 +17,7 @@ addCommand("dev", function(sender, args)
     if cb == nil then
         local i = table.key(it, id)
         if i == nil then
-            sender.sendMessage("§cNot found")
+            sender.sendMessage "§cNot found"
             return
         end
 
@@ -24,12 +27,12 @@ addCommand("dev", function(sender, args)
 
     cb = it[id]
     if type(cb) ~= "function" then
-        sender.sendMessage("§cNot executable")
+        sender.sendMessage "§cNot executable"
         return
     end
 
     cb(sender, args)
-end).permission("op")
+end).permission "op"
     .complete(function(completions, sender, args)
         if #args == 1 then
             for k, v in pairs(it) do
