@@ -1,7 +1,6 @@
 ---@class app.Service
 ---@field id string?
 ---@field enabled boolean = false
----@field events ScriptEvent[]|nil
 ---@field tasks table<string, function>|nil
 ---
 ---@field meta_type nil|"challenge"|"rule"
@@ -40,7 +39,6 @@ function Service:setEnabled(enabled)
         if self.onTimer ~= nil and Timer.isRunning() then
             self.onTimer(true)
         end
-        self:registerEvents()
     else
         if self.onDisable ~= nil then
             self.onDisable()
@@ -48,7 +46,6 @@ function Service:setEnabled(enabled)
         if self.onTimer ~= nil and Timer.isRunning() then
             self.onTimer(false)
         end
-        self:unregisterEvents()
     end
     self.enabled = enabled
     return true
@@ -73,29 +70,6 @@ function Service:save(storage, path)
     storage:set(path..".enabled", self.enabled and true or nil)
 
     storage:clearIfEmpty(path)
-end
-
-function Service:registerEvents()
-    if self.events == nil then return end
-    for _, event in ipairs(self.events) do
-        event.register()
-    end
-end
-
-function Service:unregisterEvents()
-    if self.events == nil then return end
-    for _, event in ipairs(self.events) do
-        event.unregister()
-    end
-end
-
----@generic T : JavaObject
----@param eventClass T The class of the event.
----@param handler fun(event: T) The event handler.
-function Service:addEvent(eventClass, handler)
-    if self.events == nil then self.events = {} end
-    self.events[#self.events + 1] =
-        addEvent(eventClass, handler, false)
 end
 
 ---@param id string

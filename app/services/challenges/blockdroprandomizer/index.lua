@@ -11,9 +11,9 @@ return function(service)
     service.meta_name = "BlockDropRandomizer"
     service.meta_material = "DROPPER"
 
-    local cache = {}
+    local storage = Storage.new(service.id)
 
-    local storage = Storage.new("services-"..service.id)
+    local cache = {}
 
     storage:loadSave(function()
         storage:set("cache", nil)

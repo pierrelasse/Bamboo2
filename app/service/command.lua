@@ -60,7 +60,9 @@ end).permission("op")
     .complete(function(completions, sender, args)
         if #args == 1 then
             for key, _ in pairs(serviceManager.entries) do
-                completions.add(key)
+                if string.startswith(key, args[1]) then
+                    completions.add(key)
+                end
             end
         elseif #args == 2 then
             if string.at(args[2], 1) == ":" then
@@ -71,6 +73,7 @@ end).permission("op")
                     completions.add(":"..taskId)
                 end
             else
+                completions.add(":")
                 completions.add("enable")
                 completions.add("disable")
                 completions.add("reset")

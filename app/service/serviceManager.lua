@@ -2,6 +2,8 @@ local IDS = {
     "challenges/bba",
     "challenges/blockdroprandomizer",
     "challenges/minecraftaberalle30sekundenkommentntminecarts",
+
+    "rules/timer_no_interact"
 }
 
 local Storage = require("app/util/Storage")
