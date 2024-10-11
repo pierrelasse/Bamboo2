@@ -15,7 +15,7 @@ end
 
 function BroadcastActionBar(input)
     local component = ToMiniMessage(input)
-    for player in forEach(Bukkit.getOnlinePlayers()) do
+    for player in bukkit.onlinePlayersLoop() do
         player.sendActionBar(component)
     end
 end

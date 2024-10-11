@@ -31,7 +31,8 @@ local function decodeMPackageData(package)
         version = tonumber(package.ver),
         dependencies = package.dep,
         metadata = package.met,
-        single = package.sin
+        single = package.sin,
+        deprecated = package.old
     }
 end
 
@@ -48,12 +49,20 @@ local function createConnection(url)
     url = URL(url)
     local conn = url.openConnection()
     conn.setRequestMethod("GET")
-    conn.setConnectTimeout(2500)
-    conn.setReadTimeout(2000)
+    conn.setConnectTimeout(2000)
+    conn.setReadTimeout(2200)
     conn.setDoOutput(true)
     conn.setDoInput(true)
     conn.setUseCaches(false)
-    conn.setRequestProperty("X-Paman-Version", "2")
+    conn.setRequestProperty("X-Paman-Version", "3")
+
+    local code = conn.getResponseCode()
+    if code ~= 200 then
+        local resp
+        pcall(function() resp = Util.readStreamString(conn.getInputStream()) end)
+        error("code "..code..(resp == nil and "" or ": "..resp))
+    end
+
     return conn
 end
 
@@ -162,6 +171,11 @@ function paman.need(packageId)
         error("package '"..packageId.."' does not exist on remote")
     end
 
+    if remotePackage.deprecated ~= nil then
+        print("[paman] §e"..packageId.." is deprecated"
+            ..(remotePackage.deprecated == "" and "" or (": "..remotePackage.deprecated)))
+    end
+
     if remotePackage.dependencies ~= nil then
         for _, dependency in ipairs(remotePackage.dependencies) do
             paman.need(dependency)
@@ -175,10 +189,9 @@ function paman.need(packageId)
 
     print("[paman] downloading "..packageId)
 
-    local conn = createConnection(REMOTE_URL.."/downloadPackage?id="..packageId)
-
     local zipFile = fs.file(fs.scriptingDir(), "paman.tmp")
 
+    local conn = createConnection(REMOTE_URL.."/downloadPackage?id="..packageId)
     fs.writeInputStreamToFile(conn.getInputStream(), zipFile)
 
     if remotePackage.single then

@@ -1,6 +1,3 @@
-local Bukkit = classFor("org.bukkit.Bukkit")
-
-
 local logger = {}
 logger.__index = logger
 
@@ -11,7 +8,7 @@ function logger.new(sys)
 end
 
 function logger:broadcast(rawMessage)
-    for player in forEach(Bukkit.getOnlinePlayers()) do
+    for player in bukkit.onlinePlayersLoop() do
         if player.getName() == "pierrelasse" or player.getName() == "LCHEETAH" then -- TODO: less cracky
             player.sendMessage(rawMessage)
             break

@@ -1,17 +1,14 @@
-local Bukkit = classFor("org.bukkit.Bukkit")
-
-
 addCommand("cloneinv", function(sender, args)
     if args[1] == nil then
         sender.sendMessage("§cUsage: /cloneinv <to: player> <from: player>")
         return
     end
-    local to = Bukkit.getPlayer(args[1])
+    local to = bukkit.getPlayer(args[1])
     if to == nil then
         sender.sendMessage("§4From §cnot found!")
         return
     end
-    local from = (args[2] ~= nil and Bukkit.getPlayer(args[2])) or sender
+    local from = (args[2] ~= nil and bukkit.getPlayer(args[2])) or sender
 
     sender.sendMessage("§aCloning inventory to §2"..to.getName().."§a from §2"..from.getName())
 

@@ -7,7 +7,8 @@ function string.endsWith(s, ending)
 end
 
 function string.replace(s, what, with)
-    return string.gsub(s, what, with)
+    local result = string.gsub(s, what, with)
+    return result
 end
 
 function string.contains(s, find)

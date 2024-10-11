@@ -21,7 +21,7 @@ return function(service)
             if time >= INTERVAL then
                 time = 0
 
-                for player in forEach(Bukkit.getOnlinePlayers()) do
+                for player in bukkit.onlinePlayersLoop() do
                     if player.getGameMode().name() == "SURVIVAL" then
                         local loc = player.getLocation()
                         local world = loc.getWorld()

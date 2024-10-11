@@ -7,7 +7,7 @@ local PlayerMoveEvent = classFor("org.bukkit.event.player.PlayerMoveEvent")
 local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
-local worldmanager = require("@worldmanager/worldmanager")
+local worldmanager = require("@bukkit/worldmanager/worldmanager")
 local serviceManager = require("app/service/serviceManager")
 
 local resetting = false
@@ -67,7 +67,7 @@ function FastReset(sender)
 
     BroadcastActionBar("Reset von "..sender.getName().." veranlasst")
 
-    for player in forEach(Bukkit.getOnlinePlayers()) do
+    for player in bukkit.onlinePlayersLoop() do
         player.teleport(awaitLocation)
         player.setGameMode(GameMode.SPECTATOR)
     end
@@ -82,7 +82,7 @@ function FastReset(sender)
             progress = progress.."-"
         end
 
-        for player in forEach(Bukkit.getOnlinePlayers()) do
+        for player in bukkit.onlinePlayersLoop() do
             player.sendTitle(progress, "§lWelten werden zurückgesetzt", 0, 999999, 0)
         end
     end
@@ -128,7 +128,7 @@ function FastReset(sender)
         m = m.."\n§7Der Server wurde zurückgesetzt."
         m = m.."\n§7Du kannst direkt wieder verbinden."
         m = m.."\n"
-        for player in forEach(Bukkit.getOnlinePlayers()) do
+        for player in bukkit.onlinePlayersLoop() do
             player.kickPlayer(m)
         end
     end

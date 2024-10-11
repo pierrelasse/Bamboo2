@@ -1,13 +1,10 @@
-local Bukkit = classFor("org.bukkit.Bukkit")
-
-
 addCommand({ "msg", "w", "tell", "minecraft:msg", "minecraft:w", "minecraft:tell" }, function(sender, args)
     if args[1] == nil then
         sender.sendMessage("§cUsage: /msg <spieler> <nachricht...>")
         return
     end
 
-    local target = Bukkit.getPlayerExact(args[1])
+    local target = bukkit.getPlayer(args[1])
     if target == nil or not sender.canSee(target) or sender == target then
         sender.sendMessage("§cSpieler nicht gefunden")
         return
@@ -19,7 +16,7 @@ addCommand({ "msg", "w", "tell", "minecraft:msg", "minecraft:w", "minecraft:tell
 end)
     .complete(function(completions, sender, args)
         if #args == 1 then
-            for player in forEach(Bukkit.getOnlinePlayers()) do
+            for player in bukkit.onlinePlayersLoop() do
                 local name = player.getName()
                 if string.startswith(name, args[1]) and sender.canSee(player) then
                     completions.add(name)
