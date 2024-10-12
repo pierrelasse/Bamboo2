@@ -38,9 +38,7 @@ end)
 addEvent(PlayerRespawnEvent, function(event)
     if event.getRespawnLocation().getWorld() == mainWorld then
         event.setRespawnLocation(fakeWorld.getSpawnLocation().clone().add(.5, 0, .5))
-        print("??")
     end
-    print("ee")
 end)
 
 addEvent(PlayerJoinEvent, function(event)

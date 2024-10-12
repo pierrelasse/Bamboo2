@@ -1,3 +1,7 @@
+## Ideen
+
+-   Randomizer für Container (chests, shulker boxen) deaktivieren
+
 ## Name
 
 "Mob Battle Arena Am Ende Des Spiels" ?

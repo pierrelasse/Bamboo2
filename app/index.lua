@@ -2,15 +2,17 @@ local paman = require("@base/paman")
 paman.need("core")
 paman.need("extra/guimaker")
 paman.need("core/classloader")
+paman.need("bukkit/worldmanager")
 paman.need("bukkit/getPlayer")
 paman.need("bukkit/onlinePlayers")
-paman.need("bukkit/worldmanager")
+paman.need("bukkit/send")
 
 require("@core/util/string")
 require("@core/util/table")
 
 require("@bukkit/getPlayer")
 require("@bukkit/onlinePlayers")
+require("@bukkit/send")
 
 require("app/util/static")
 

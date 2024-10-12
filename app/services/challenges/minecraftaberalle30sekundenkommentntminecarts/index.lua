@@ -18,14 +18,25 @@ return function(service)
             if not Timer.isRunning() then return end
             time = time + 1
 
+            if time == INTERVAL - 2 then
+                for player in bukkit.onlinePlayersLoop() do
+                    bukkit.sendTitle(player, "§cT§4N§cT§4!", nil)
+                end
+                return
+            end
+
             if time >= INTERVAL then
                 time = 0
 
                 for player in bukkit.onlinePlayersLoop() do
                     if player.getGameMode().name() == "SURVIVAL" then
-                        local loc = player.getLocation()
+                        local loc = player.getLocation().clone().add(0, math.random(-1, 4), 0)
                         local world = loc.getWorld()
-                        for _ = 1, 30 do
+                        local amount = math.random(1,
+                                                   math.random(0, 1) == 0 and math.random(1, 3) or
+                                                   math.random(1, 10) + math.random(0, 40))
+                        bukkit.sendTitle(player, nil, "§c"..amount)
+                        for _ = 1, amount do
                             world.spawn(loc, ExplosiveMinecart)
                         end
                     end

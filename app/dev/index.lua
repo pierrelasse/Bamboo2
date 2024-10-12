@@ -1,9 +1,14 @@
 local it = {
+    "BLOCK_GRIEF",
+    "CONVERSATION_WTF",
     "DISPLAYFUNNYTITLE",
     "DYNCMD",
+    "FUNNY_FLYING_TNT",
     "MINIMESSAGE",
     "MULTI_ASYNC",
     "SOUNDCHECK",
+    "SPIGOT_SEND",
+    "SYSTEMMSG",
 }
 
 addCommand("dev", function(sender, args)
