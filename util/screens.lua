@@ -1,5 +1,5 @@
-local guimaker = require("@extra/guimaker/guimaker")
-local uihelper = require("@extra/guimaker/uihelper")
+local guimaker = require("@bukkit/guimaker/guimaker")
+local uihelper = require("@bukkit/guimaker/uihelper")
 local item = uihelper.item
 
 
@@ -31,10 +31,10 @@ function screens.makeScreen(title, sizeOrType)
     return screen
 end
 
----@param screen GUI
+---@param screen bukkit.guimaker.GUI
 ---@param slot integer
 ---@param itemStack JavaObject
----@param cb fun(event: extra.guimaker.ClickEvent)
+---@param cb fun(event: bukkit.guimaker.ClickEvent)
 function screens.button(screen, slot, itemStack, cb)
     screen:set(slot, itemStack)
     screen.data["action."..slot] = cb

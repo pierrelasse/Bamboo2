@@ -14,7 +14,7 @@ local AttributeModifier = classFor("org.bukkit.attribute.AttributeModifier")
 local AttributeModifier_Operation = classFor("org.bukkit.attribute.AttributeModifier$Operation")
 -- local SkullMeta = classFor("org.bukkit.inventory.meta.SkullMeta")
 
-local bukkitVersion = require("@extra/bukkitVersion")
+require("@bukkit/version")
 
 
 local MSG_PREFIX = "§2[§aItemEdit§2] §7"
@@ -199,7 +199,7 @@ do
                 end
 
                 local modifier
-                if bukkitVersion.isAfter(1, 20, 6) then
+                if bukkit.version.after(1, 20, 6) then
                     local group
                     if slot == nil then
                         group = EquipmentSlotGroup.ANY
