@@ -1,13 +1,19 @@
 local it = {
     "BLOCK_GRIEF",
+    "CHANGE_NAME_SUSSY",
     "CONVERSATION_WTF",
     "DISPLAYFUNNYTITLE",
     "DYNCMD",
     "FUNNY_FLYING_TNT",
     "MINIMESSAGE",
     "MULTI_ASYNC",
+    "NAMETAGS",
+    "RAINBOW_SB",
+    "RGB_PLAYER_LIST_NAME",
+    "SB_REVIEW",
     "SOUNDCHECK",
     "SPIGOT_SEND",
+    "SQL",
     "SYSTEMMSG",
 }
 
@@ -41,10 +47,14 @@ end).permission "op"
     .complete(function(completions, sender, args)
         if #args == 1 then
             for k, v in pairs(it) do
+                local text
                 if type(k) == "string" then
-                    completions.add(k)
+                    text = k
                 else
-                    completions.add(v)
+                    text = v
+                end
+                if args[1] == nil or string.startswith(text, args[1]) then
+                    completions.add(text)
                 end
             end
         end

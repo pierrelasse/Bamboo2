@@ -1,22 +1,14 @@
 local paman = require("@base/paman")
 paman.need("bukkit/guimaker")
+paman.need("bukkit/scoreboard/Sidebar")
+paman.need("bukkit/scoreboard/simpleteams")
 paman.need("bukkit/worldmanager")
-paman.need("bukkit/getPlayer")
-paman.need("bukkit/onlinePlayers")
-paman.need("bukkit/send")
-paman.need("bukkit/version")
-paman.need("core")
+paman.need("bukkit/basic")
 paman.need("core/classloader")
 
-require("@core/util/string")
-require("@core/util/table")
-
-require("@bukkit/getPlayer")
-require("@bukkit/onlinePlayers")
-require("@bukkit/send")
+require("@bukkit/basic")
 
 require("app/util/static")
-
 require("app/i18n")
 
 require("app/sys/chat")
@@ -36,7 +28,10 @@ require("app/service/command")
 
 require("app/dev/index")
 
-require("app/util/itemEdit")
+require("app/admincommands/_all")
 
-paman.need("bukkit/plugins/gamemode")
-require("@bukkit/plugins/gamemode")
+paman.need("bukkit/plugins/eval")
+require("@bukkit/plugins/eval")
+
+paman.need("bukkit/plugins/itemEdit")
+require("@bukkit/plugins/itemEdit")

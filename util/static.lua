@@ -1,4 +1,3 @@
-local Bukkit = classFor("org.bukkit.Bukkit")
 local MiniMessage = classFor("net.kyori.adventure.text.minimessage.MiniMessage")
 
 function ToMiniMessage(input)
@@ -18,12 +17,4 @@ function BroadcastActionBar(input)
     for player in bukkit.onlinePlayersLoop() do
         player.sendActionBar(component)
     end
-end
-
----@param player JavaObject
----@param sound string
----@param pitch number? 0-1
----@param volume number? 0-1
-function PlaySound(player, sound, pitch, volume)
-    player.playSound(player.getLocation(), sound, volume or 1, pitch or 1)
 end

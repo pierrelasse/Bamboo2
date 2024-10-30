@@ -1,7 +1,7 @@
 return function(player)
     for i = 1, 10 do
         wait(i, function()
-            PlaySound(player, "minecraft:block.anvil.land", i / 10)
+            bukkit.playSound(player, "minecraft:block.anvil.land", 1, i / 10)
         end)
     end
 end
