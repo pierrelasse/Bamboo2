@@ -1,9 +1,11 @@
----@class app.Service
+---@class pierrelasse.bamboo.Service
 ---@field id string?
 ---@field enabled boolean = false
 ---@field tasks table<string, function>|nil
+---@field events ScriptEvent[]?
 ---
----@field meta_type nil|"challenge"|"rule"
+---@field enabledByDefault true?
+---@field meta_type nil|"challenge"|"rule"|"core"
 ---@field meta_name string|nil
 ---@field meta_material string|nil
 ---
@@ -36,15 +38,17 @@ function Service:setEnabled(enabled)
         if self.onEnable ~= nil then
             self.onEnable()
         end
-        if self.onTimer ~= nil and Timer.isRunning() then
+        if self.onTimer ~= nil and Bamboo.timer.isRunning() then
             self.onTimer(true)
         end
+        self:registerEvents()
     else
+        self:unregisterEvents()
+        if self.onTimer ~= nil and Bamboo.timer.isRunning() then
+            self.onTimer(false)
+        end
         if self.onDisable ~= nil then
             self.onDisable()
-        end
-        if self.onTimer ~= nil and Timer.isRunning() then
-            self.onTimer(false)
         end
     end
     self.enabled = enabled
@@ -58,13 +62,19 @@ function Service:doReset()
     end
 end
 
----@param storage app.util.Storage
+---@param storage pierrelasse.bamboo.util.Storage
 ---@param path string
 function Service:load(storage, path)
-    self:setEnabled(storage:get(path..".enabled") == true)
+    local enabled = storage:get(path..".enabled")
+    if enabled == nil then
+        enabled = self.enabledByDefault == true
+    else
+        enabled = enabled == true
+    end
+    self:setEnabled(enabled)
 end
 
----@param storage app.util.Storage
+---@param storage pierrelasse.bamboo.util.Storage
 ---@param path string
 function Service:save(storage, path)
     storage:set(path..".enabled", self.enabled and true or nil)
@@ -77,6 +87,29 @@ end
 function Service:addTask(id, handler)
     if self.tasks == nil then self.tasks = {} end
     self.tasks[id] = handler
+end
+
+function Service:event(eventClass, handler)
+    if self.events == nil then self.events = {} end
+
+    local event = addEvent(eventClass, handler, self.enabled)
+    self.events[#self.events + 1] = event
+
+    return event
+end
+
+function Service:registerEvents()
+    if self.events == nil then return end
+    for _, event in ipairs(self.events) do
+        event.register()
+    end
+end
+
+function Service:unregisterEvents()
+    if self.events == nil then return end
+    for _, event in ipairs(self.events) do
+        event.unregister()
+    end
 end
 
 return Service

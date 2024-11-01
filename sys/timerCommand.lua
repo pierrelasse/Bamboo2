@@ -1,18 +1,15 @@
-local timer = require("app/sys/timer")
-
-
 addCommand("timer", function(sender, args)
     if args[1] == "continue" then
-        timer.start()
-        Send(sender, I18n.g("timer", "command.continue"))
+        Bamboo.timer.start()
+        Send(sender, "§lDer Timer wird nun fortgesetzt.")
     elseif args[1] == "terminate" then
-        timer.stop()
-        Send(sender, I18n.g("timer", "command.terminate"))
+        Bamboo.timer.stop()
+        Send(sender, "§lDer Timer wird nun pausiert.")
     elseif args[1] == "delete" then
-        timer.reset()
-        Send(sender, I18n.g("timer", "command.delete"))
+        Bamboo.timer.reset()
+        Send(sender, "§lDer Timer wird nun zurückgesetzt.")
     else
-        Send(sender, I18n.g("timer", "command.usage"))
+        Send(sender, "§cFalsche Verwendung!")
     end
 end).complete(function(completions, sender, args)
     completions.add("continue")

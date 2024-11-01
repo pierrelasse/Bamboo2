@@ -3,15 +3,23 @@ local IDS = {
     "challenges/blockdroprandomizer",
     "challenges/minecraftaberalle30sekundenkommentntminecarts",
 
-    "rules/timer_no_interact"
+    "core/chat",
+    "core/joinquitmsgs",
+    "core/menu",
+    "core/messaging",
+    "core/resetcmd",
+    "core/resources",
+    "core/timerDisplay",
+
+    "rules/timer_no_interact",
 }
 
-local Storage = require("app/util/Storage")
-local Service = require("app/service/Service")
+local Storage = require("@pierrelasse/bamboo/util/Storage")
+local Service = require("@pierrelasse/bamboo/service/Service")
 
 
 local serviceManager = {
-    ---@type table<string, app.Service>
+    ---@type table<string, pierrelasse.bamboo.Service>
     entries = {},
 
     ---@type JavaObject|nil org.bukkit.generator.ChunkGenerator
@@ -32,9 +40,9 @@ end)
 
 function serviceManager.load()
     for _, id in ipairs(IDS) do
-        ---@type app.Service
+        ---@type pierrelasse.bamboo.Service
         local service = Service.new(id)
-        require("app/services/"..id.."/index")(service)
+        require("@pierrelasse/bamboo/services/"..id.."/index")(service)
         service:load(storage, "services."..id)
         serviceManager.entries[id] = service
     end

@@ -1,8 +1,8 @@
-local serviceManager = require("app/service/serviceManager")
-local storage = require("app/util/Storage").new("timer")
+local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
+local storage = require("@pierrelasse/bamboo/util/Storage").new("timer")
 
 
-Timer = {
+Bamboo.timer = {
     ---@type ScriptTask|nil
     task = nil,
 
@@ -10,17 +10,17 @@ Timer = {
     time = nil
 }
 
-function Timer.tick()
-    Timer.time = Timer.time + 1
+function Bamboo.timer.tick()
+    Bamboo.timer.time = Bamboo.timer.time + 1
 end
 
-function Timer.isRunning()
-    return Timer.task ~= nil
+function Bamboo.timer.isRunning()
+    return Bamboo.timer.task ~= nil
 end
 
-function Timer.start()
-    if Timer.task == nil then
-        Timer.task = every(20, Timer.tick)
+function Bamboo.timer.start()
+    if Bamboo.timer.task == nil then
+        Bamboo.timer.task = every(20, Bamboo.timer.tick)
 
         for _, service in pairs(serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
@@ -30,10 +30,10 @@ function Timer.start()
     end
 end
 
-function Timer.stop()
-    if Timer.task ~= nil then
-        Timer.task.cancel()
-        Timer.task = nil
+function Bamboo.timer.stop()
+    if Bamboo.timer.task ~= nil then
+        Bamboo.timer.task.cancel()
+        Bamboo.timer.task = nil
 
         for _, service in pairs(serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
@@ -43,19 +43,19 @@ function Timer.stop()
     end
 end
 
-function Timer.reset()
-    Timer.stop()
-    Timer.time = 0
+function Bamboo.timer.reset()
+    Bamboo.timer.stop()
+    Bamboo.timer.time = 0
 end
 
 storage:loadSave(function()
-    storage:set("time", Timer.time)
-    storage:set("running", Timer.isRunning())
+    storage:set("time", Bamboo.timer.time)
+    storage:set("running", Bamboo.timer.isRunning())
 end)
-Timer.time = storage:get("time", 0)
+Bamboo.timer.time = storage:get("time", 0)
 
 if storage:get("running") == true then
-    Timer.start()
+    Bamboo.timer.start()
 end
 
-return Timer
+return Bamboo.timer

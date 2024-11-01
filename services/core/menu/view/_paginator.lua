@@ -1,10 +1,10 @@
-local serviceManager = require("app/service/serviceManager")
+local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 
 
 ---@param slots integer[]
 ---@param page integer
----@param filter fun(service: app.Service):boolean
----@param setter fun(slot: integer, service: app.Service|nil)
+---@param filter fun(service: pierrelasse.bamboo.Service):boolean
+---@param setter fun(slot: integer, service: pierrelasse.bamboo.Service|nil)
 ---@return integer maxPages
 return function(slots, page, filter, setter)
     local ids = {}

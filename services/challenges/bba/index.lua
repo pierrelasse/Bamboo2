@@ -1,7 +1,7 @@
-local Storage = require("app/util/Storage")
+local Storage = require("@pierrelasse/bamboo/util/Storage")
 
 
----@param service app.Service
+---@param service pierrelasse.bamboo.Service
 return function(service)
     service.meta_type = "challenge"
     service.meta_name = "Mob Battle Arena Am Ende Des Spiels"

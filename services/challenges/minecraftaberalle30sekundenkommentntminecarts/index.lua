@@ -2,7 +2,7 @@ local Bukkit = classFor("org.bukkit.Bukkit")
 local ExplosiveMinecart = classFor("org.bukkit.entity.minecart.ExplosiveMinecart")
 
 
----@param service app.Service
+---@param service pierrelasse.bamboo.Service
 return function(service)
     service.meta_type = "challenge"
     service.meta_name = "Minecraft Aber Alle 30 Sekunden Kommen TNT Minecarts"
@@ -11,11 +11,11 @@ return function(service)
     ---@type ScriptTask
     local task
     local time = 0
-    local INTERVAL = 30
+    local INTERVAL = 10 --30
 
     service.onEnable = function()
         task = every(20, function()
-            if not Timer.isRunning() then return end
+            if not Bamboo.timer.isRunning() then return end
             time = time + 1
 
             if time == INTERVAL - 2 then
@@ -32,9 +32,10 @@ return function(service)
                     if player.getGameMode().name() == "SURVIVAL" then
                         local loc = player.getLocation().clone().add(0, math.random(-1, 4), 0)
                         local world = loc.getWorld()
-                        local amount = math.random(1,
-                                                   math.random(0, 1) == 0 and math.random(1, 3) or
-                                                   math.random(1, 10) + math.random(0, 40))
+                        local amount = 5
+                        -- math.random(1,
+                        --                            math.random(0, 1) == 0 and math.random(1, 3) or
+                        --                            math.random(1, 10) + math.random(0, 40))
                         bukkit.sendTitle(player, nil, "§c"..amount)
                         for _ = 1, amount do
                             world.spawn(loc, ExplosiveMinecart)

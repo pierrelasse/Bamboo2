@@ -8,7 +8,7 @@ local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
 local worldmanager = require("@bukkit/worldmanager/worldmanager")
-local serviceManager = require("app/service/serviceManager")
+local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 
 local resetting = false
 
@@ -61,7 +61,7 @@ function FastReset(sender)
     if resetting or not sender.isOnline() then return end
     resetting = true
 
-    Timer.reset()
+    Bamboo.timer.reset()
 
     BroadcastActionBar("Reset von "..sender.getName().." veranlasst")
 

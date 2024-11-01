@@ -7,6 +7,8 @@ function logger.new(sys)
     return self
 end
 
+Bamboo.logger = logger.new
+
 function logger:broadcast(rawMessage)
     for player in bukkit.onlinePlayersLoop() do
         if player.getName() == "pierrelasse" or player.getName() == "LCHEETAH" then -- TODO: less cracky

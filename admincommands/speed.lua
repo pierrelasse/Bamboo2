@@ -8,7 +8,7 @@ local MESSAGE_SET_OTHER = "§7Set §e%s's %s§7 speed to §e%s"
 local MESSAGE_MISSING_OTHER_PERMISSION = "§cMissing permission §e"..PERMISSION_OTHER
 
 require("@bukkit/send")
-local _targets = require("app/admincommands/_targets")
+local _targets = require("@pierrelasse/bamboo/admincommands/_targets")
 
 
 addCommand("speed", function(sender, args)

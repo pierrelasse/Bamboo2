@@ -2,10 +2,10 @@ local Material = classFor("org.bukkit.Material")
 local ItemStack = classFor("org.bukkit.inventory.ItemStack")
 local BlockBreakEvent = classFor("org.bukkit.event.block.BlockBreakEvent")
 
-local Storage = require("app/util/Storage")
+local Storage = require("@pierrelasse/bamboo/util/Storage")
 
 
----@param service app.Service
+---@param service pierrelasse.bamboo.Service
 return function(service)
     service.meta_type = "challenge"
     service.meta_name = "BlockDropRandomizer"
@@ -44,27 +44,28 @@ return function(service)
         cache = {}
     end
 
-    ---@type ScriptEvent
-    local ev
+    local event =
+        addEvent(BlockBreakEvent, function(event)
+                     event.setDropItems(false)
+
+                     local block = event.getBlock()
+                     local loc = block.getLocation()
+
+                     local id = block.getType().name()
+                     local material = cache[id]
+                     if material == nil then
+                         material = table.randomElement(availableMaterials)
+                         cache[id] = material
+                     end
+                     local itemStack = ItemStack(material)
+                     loc.getWorld().dropItemNaturally(loc, itemStack)
+                 end, false)
+
     function service.onEnable()
-        ev = addEvent(BlockBreakEvent, function(event)
-            event.setDropItems(false)
-
-            local block = event.getBlock()
-            local loc = block.getLocation()
-
-            local id = block.getType().name()
-            local material = cache[id]
-            if material == nil then
-                material = table.randomElement(availableMaterials)
-                cache[id] = material
-            end
-            local itemStack = ItemStack(material)
-            loc.getWorld().dropItemNaturally(loc, itemStack)
-        end)
+        event.register()
     end
 
     function service.onDisable()
-        ev.unregister()
+        event.unregister()
     end
 end

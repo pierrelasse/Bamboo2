@@ -1,4 +1,4 @@
-local serviceManager = require("app/service/serviceManager")
+local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 
 
 addCommand("service", function(sender, args)
@@ -58,11 +58,15 @@ addCommand("service", function(sender, args)
     sender.sendMessage("§cAction not found")
 end).permission("op")
     .complete(function(completions, sender, args)
+        local function complete(value, i)
+            if args[i] == nil or string.startswith(value, args[i]) then
+                completions.add(value)
+            end
+        end
+
         if #args == 1 then
             for key, _ in pairs(serviceManager.entries) do
-                if string.startswith(key, args[1]) then
-                    completions.add(key)
-                end
+                complete(key, 1)
             end
         elseif #args == 2 then
             if string.at(args[2], 1) == ":" then
@@ -70,13 +74,13 @@ end).permission("op")
                 local service = serviceManager.entries[id]
                 if service == nil or service.tasks == nil then return end
                 for taskId, _ in pairs(service.tasks) do
-                    completions.add(":"..taskId)
+                    complete(":"..taskId)
                 end
             else
-                completions.add(":")
-                completions.add("enable")
-                completions.add("disable")
-                completions.add("reset")
+                complete(":", 2)
+                complete("enable", 2)
+                complete("disable", 2)
+                complete("reset", 2)
             end
         end
     end)

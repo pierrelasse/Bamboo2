@@ -3,7 +3,7 @@ local EntityDamageEvent = classFor("org.bukkit.event.entity.EntityDamageEvent")
 local PlayerInteractEvent = classFor("org.bukkit.event.player.PlayerInteractEvent")
 
 
----@param service app.Service
+---@param service pierrelasse.bamboo.Service
 return function(service)
     service.meta_type = "rule"
     service.meta_name = "Freeze when timer paused"
@@ -48,7 +48,7 @@ return function(service)
     end
 
     service.onEnable = function()
-        if not Timer.isRunning() then
+        if not Bamboo.timer.isRunning() then
             activate()
         end
     end

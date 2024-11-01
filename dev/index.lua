@@ -15,6 +15,7 @@ local it = {
     "SPIGOT_SEND",
     "SQL",
     "SYSTEMMSG",
+    "TENGOKU",
 }
 
 addCommand("dev", function(sender, args)
@@ -32,7 +33,7 @@ addCommand("dev", function(sender, args)
             return
         end
 
-        it[id] = require("app/dev/it/"..id)
+        it[id] = require("@pierrelasse/bamboo/dev/it/"..id)
         it[i] = nil
     end
 

@@ -1,37 +1,52 @@
 local paman = require("@base/paman")
+paman.need("bukkit/basic")
 paman.need("bukkit/guimaker")
 paman.need("bukkit/scoreboard/Sidebar")
 paman.need("bukkit/scoreboard/simpleteams")
 paman.need("bukkit/worldmanager")
-paman.need("bukkit/basic")
 paman.need("core/classloader")
 
 require("@bukkit/basic")
 
-require("app/util/static")
-require("app/i18n")
+-- Bamboo
+do
+    Bamboo = {}
 
-require("app/sys/chat")
-require("app/sys/fastreset")
-require("app/sys/joinQuitMsgs")
-require("app/sys/menu")
-require("app/sys/messaging")
-require("app/sys/resetCommand")
-require("app/sys/staff")
-require("app/sys/timerTranslations")
-require("app/sys/timer")
-require("app/sys/timerCommand")
-require("app/sys/timerDisplay")
+    require("@pierrelasse/bamboo/util/logger")
 
-require("app/service/serviceManager").load()
-require("app/service/command")
+    Bamboo._debugLogger = Bamboo.logger("debug")
+    function Bamboo.debug(message)
+        Bamboo._debugLogger:debug(message)
+    end
 
-require("app/dev/index")
+    require("@pierrelasse/bamboo/util/static")
 
-require("app/admincommands/_all")
+    require("@pierrelasse/bamboo/sys/fastreset")
+    require("@pierrelasse/bamboo/sys/timer")
+    require("@pierrelasse/bamboo/sys/timerCommand")
+
+    Bamboo.serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
+    Bamboo.serviceManager.load()
+    require("@pierrelasse/bamboo/service/command")
+
+    require("@pierrelasse/bamboo/dev/index")
+end
+
+-- Util
+require("@pierrelasse/bamboo/admincommands/_all")
 
 paman.need("bukkit/plugins/eval")
 require("@bukkit/plugins/eval")
 
 paman.need("bukkit/plugins/itemEdit")
 require("@bukkit/plugins/itemEdit")
+
+
+
+-- local EntitySpawnEvent = classFor("org.bukkit.event.entity.EntitySpawnEvent")
+-- local  = classFor("org.bukkit.event.entity.EntitySpawnEvent")
+
+-- addEvent(EntitySpawnEvent, function (event)
+--     local entity = event.getEntity()
+
+-- end)

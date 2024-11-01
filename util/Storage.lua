@@ -3,10 +3,10 @@ local ArrayList = classFor("java.util.ArrayList")
 local YamlConfiguration = classFor("org.bukkit.configuration.file.YamlConfiguration")
 
 local fs = require("@base/fs")
-local logger = require("app/util/logger").new("Storage")
+local logger = require("@pierrelasse/bamboo/util/logger").new("Storage")
 
 
----@class app.util.Storage
+---@class pierrelasse.bamboo.util.Storage
 ---@field name string
 ---@field file JavaObject java.io.File
 ---@field config JavaObject

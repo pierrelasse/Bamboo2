@@ -1,0 +1,23 @@
+local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
+local PlayerQuitEvent = classFor("org.bukkit.event.player.PlayerQuitEvent")
+
+
+---@param service pierrelasse.bamboo.Service
+return function(service)
+    service.enabledByDefault = true
+    service.meta_type = "core"
+
+    local logger = Bamboo.logger("joinquitmsgs")
+
+    service:event(PlayerJoinEvent, function(event)
+        event.setJoinMessage(nil)
+        local name = event.getPlayer().getName()
+        logger:debug(name.." joined")
+    end)
+
+    service:event(PlayerQuitEvent, function(event)
+        event.setQuitMessage(nil)
+        local name = event.getPlayer().getName()
+        logger:debug(name.." left")
+    end)
+end

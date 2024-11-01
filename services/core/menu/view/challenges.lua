@@ -1,5 +1,5 @@
-local screens = require("app/util/screens")
-local paginator = require("app/view/_paginator")
+local screens = require("@pierrelasse/bamboo/util/screens")
+local paginator = require("@pierrelasse/bamboo/services/core/menu/view/_paginator")
 
 
 local ITM_LEFT = screens.item(

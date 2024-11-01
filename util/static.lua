@@ -1,5 +1,6 @@
 local MiniMessage = classFor("net.kyori.adventure.text.minimessage.MiniMessage")
 
+
 function ToMiniMessage(input)
     return MiniMessage.miniMessage().deserialize(input)
 end

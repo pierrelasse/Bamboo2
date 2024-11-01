@@ -3,7 +3,7 @@ local MESSAGE_TARGET_NOT_FOUND = "§cTarget not found!"
 local MESSAGE_SUDOING = "§7Sudoing §e%s§7:§f %s"
 
 require("@bukkit/send")
-local _targets = require("app/admincommands/_targets")
+local _targets = require("@pierrelasse/bamboo/admincommands/_targets")
 
 local targeter = _targets.LIKE_PROB_THE_ONLY_USED_ONE_LOL
 
