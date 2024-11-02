@@ -1,6 +1,3 @@
-local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
-
-
 ---@param slots integer[]
 ---@param page integer
 ---@param filter fun(service: pierrelasse.bamboo.Service):boolean
@@ -8,7 +5,7 @@ local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 ---@return integer maxPages
 return function(slots, page, filter, setter)
     local ids = {}
-    for serviceId, service in pairs(serviceManager.entries) do
+    for serviceId, service in pairs(Bamboo.serviceManager.entries) do
         if filter(service) then
             ids[#ids + 1] = serviceId
         end
@@ -20,7 +17,7 @@ return function(slots, page, filter, setter)
         local slot = 2 + offset
         local idIndex = currId + offset
         local serviceId = ids[idIndex]
-        setter(slot, serviceId == nil and nil or serviceManager.entries[serviceId])
+        setter(slot, serviceId == nil and nil or Bamboo.serviceManager.entries[serviceId])
     end
 
     return table.length(ids) / #slots

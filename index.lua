@@ -25,11 +25,12 @@ do
     require("@pierrelasse/bamboo/sys/timer")
     require("@pierrelasse/bamboo/sys/timerCommand")
 
-    Bamboo.serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
-    Bamboo.serviceManager.load()
+    require("@pierrelasse/bamboo/service/serviceManager")
     require("@pierrelasse/bamboo/service/command")
 
     require("@pierrelasse/bamboo/dev/index")
+
+    require("@pierrelasse/bamboo/sys/lagprot")
 end
 
 -- Util
@@ -40,13 +41,3 @@ require("@bukkit/plugins/eval")
 
 paman.need("bukkit/plugins/itemEdit")
 require("@bukkit/plugins/itemEdit")
-
-
-
--- local EntitySpawnEvent = classFor("org.bukkit.event.entity.EntitySpawnEvent")
--- local  = classFor("org.bukkit.event.entity.EntitySpawnEvent")
-
--- addEvent(EntitySpawnEvent, function (event)
---     local entity = event.getEntity()
-
--- end)

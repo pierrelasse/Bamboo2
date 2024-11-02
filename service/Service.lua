@@ -3,6 +3,7 @@
 ---@field enabled boolean = false
 ---@field tasks table<string, function>|nil
 ---@field events ScriptEvent[]?
+---@field exports any
 ---
 ---@field enabledByDefault true?
 ---@field meta_type nil|"challenge"|"rule"|"core"

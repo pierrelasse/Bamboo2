@@ -9,12 +9,14 @@ local screens = {
     ITM_BG = item("WHITE_STAINED_GLASS_PANE", "§")
 }
 
-function screens.makeScreen(title, sizeOrType)
+function screens.makeScreen(title, sizeOrType, bg)
     local screen = guimaker.new(title, sizeOrType)
     screen.data = {}
 
-    for slot = 0, screen:slotCount() - 1 do
-        screen:set(slot, screens.ITM_BG)
+    if bg ~= nil then
+        for slot = 0, screen:slotCount() - 1 do
+            screen:set(slot, bg)
+        end
     end
 
     screen.onClick = function(player, event)

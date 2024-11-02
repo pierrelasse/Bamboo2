@@ -8,7 +8,6 @@ local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
 local worldmanager = require("@bukkit/worldmanager/worldmanager")
-local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 
 local resetting = false
 
@@ -19,8 +18,8 @@ local fakeWorld = worldmanager.get(FAKE_WORLD_ID)
 if fakeWorld == nil then
     print("creating game world")
     local creator = worldmanager.create(FAKE_WORLD_ID)
-    if serviceManager.worldGenOverworld ~= nil then
-        creator:setGenerator(serviceManager.worldGenOverworld)
+    if Bamboo.serviceManager.worldGenOverworld ~= nil then
+        creator:setGenerator(Bamboo.serviceManager.worldGenOverworld)
     end
     fakeWorld = creator:create()
 end
@@ -103,8 +102,8 @@ function FastReset(sender)
         doTitle(3, 6)
         local creator = worldmanager.create("world_nether")
         creator:setEnvironment(-1)
-        if serviceManager.worldGenNether ~= nil then
-            creator:setGenerator(serviceManager.worldGenNether)
+        if Bamboo.serviceManager.worldGenNether ~= nil then
+            creator:setGenerator(Bamboo.serviceManager.worldGenNether)
         end
         creator:create()
     end
@@ -114,8 +113,8 @@ function FastReset(sender)
         doTitle(5, 6)
         local creator = worldmanager.create("world_the_end")
         creator:setEnvironment(1)
-        if serviceManager.worldGenEnd ~= nil then
-            creator:setGenerator(serviceManager.worldGenEnd)
+        if Bamboo.serviceManager.worldGenEnd ~= nil then
+            creator:setGenerator(Bamboo.serviceManager.worldGenEnd)
         end
         creator:create()
     end

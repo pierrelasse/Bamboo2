@@ -1,16 +1,11 @@
 local Bukkit = classFor("org.bukkit.Bukkit")
 local AsyncPlayerChatEvent = classFor("org.bukkit.event.player.AsyncPlayerChatEvent")
 
-local emojis = require("@pierrelasse/bamboo/services/core/chat/emojis")
-local ranks = require("@pierrelasse/bamboo/services/core/chat/ranks")
-
 
 ---@param service pierrelasse.bamboo.Service
 return function(service)
     service.enabledByDefault = true
     service.meta_type = "core"
-
-    local emojisEnabled = true
 
     service:event(AsyncPlayerChatEvent, function(event)
         event.setCancelled(true)
@@ -19,13 +14,20 @@ return function(service)
         local name = player.getName()
         local message = event.getMessage()
 
-        name = ranks.chatFormatName(name)
+        do
+            local emojis = Bamboo.serviceManager.get("core/chat-emojis")
+            if emojis ~= nil then
+                message = emojis(message)
+            end
+        end
+
+        do
+            local ranks = Bamboo.serviceManager.get("core/ranks")
+            if ranks ~= nil then
+                name = ranks.getFormattedName(name)
+            end
+        end
 
         Bukkit.broadcastMessage(name.."§f: "..message)
-    end)
-
-    service:addTask("emojis", function(sender, args)
-        emojisEnabled = not emojisEnabled
-        bukkit.send(sender, "§7Emojis are now "..(emojisEnabled and "§aenabled" or "§cdisabled"))
     end)
 end

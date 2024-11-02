@@ -11,7 +11,7 @@ return function(service)
     ---@type ScriptTask
     local task
     local time = 0
-    local INTERVAL = 10 --30
+    local INTERVAL = 30
 
     service.onEnable = function()
         task = every(20, function()
@@ -32,10 +32,10 @@ return function(service)
                     if player.getGameMode().name() == "SURVIVAL" then
                         local loc = player.getLocation().clone().add(0, math.random(-1, 4), 0)
                         local world = loc.getWorld()
-                        local amount = 5
-                        -- math.random(1,
-                        --                            math.random(0, 1) == 0 and math.random(1, 3) or
-                        --                            math.random(1, 10) + math.random(0, 40))
+                        local amount = math.random(1,
+                                                   math.random(0, 1) == 0
+                                                   and math.random(1, 3)
+                                                   or math.random(1, 10) + math.random(0, 40))
                         bukkit.sendTitle(player, nil, "§c"..amount)
                         for _ = 1, amount do
                             world.spawn(loc, ExplosiveMinecart)

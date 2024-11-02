@@ -4,9 +4,11 @@ local IDS = {
     "challenges/minecraftaberalle30sekundenkommentntminecarts",
 
     "core/chat",
+    "core/chat-emojis",
     "core/joinquitmsgs",
     "core/menu",
     "core/messaging",
+    "core/ranks",
     "core/resetcmd",
     "core/resources",
     "core/timerDisplay",
@@ -48,4 +50,13 @@ function serviceManager.load()
     end
 end
 
-return serviceManager
+function serviceManager.get(id)
+    local service = serviceManager.entries[id]
+    if service ~= nil and service.enabled == true then
+        return service.exports
+    end
+end
+
+Bamboo.serviceManager = serviceManager
+
+serviceManager.load()

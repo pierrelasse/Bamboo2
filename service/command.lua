@@ -1,13 +1,11 @@
-local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
-
-
 addCommand("service", function(sender, args)
     if #args == 0 then
-        sender.sendMessage("§7Services: "..table.concat(table.keys(serviceManager.entries), ", "))
+        -- TODO
+        sender.sendMessage("§7Services: "..table.concat(table.keys(Bamboo.serviceManager.entries), ", "))
         return
     end
 
-    local service = serviceManager.entries[args[1]]
+    local service = Bamboo.serviceManager.entries[args[1]]
     if service == nil then
         sender.sendMessage("§cService not found")
         return
@@ -65,13 +63,13 @@ end).permission("op")
         end
 
         if #args == 1 then
-            for key, _ in pairs(serviceManager.entries) do
+            for key, _ in pairs(Bamboo.serviceManager.entries) do
                 complete(key, 1)
             end
         elseif #args == 2 then
             if string.at(args[2], 1) == ":" then
                 local id = args[1]
-                local service = serviceManager.entries[id]
+                local service = Bamboo.serviceManager.entries[id]
                 if service == nil or service.tasks == nil then return end
                 for taskId, _ in pairs(service.tasks) do
                     complete(":"..taskId)

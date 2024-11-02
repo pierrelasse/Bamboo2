@@ -6,16 +6,21 @@ return function(service)
     service.enabledByDefault = true
     service.meta_type = "core"
 
-    local command = addCommand("config", function(sender, args)
-        sender.sendMessage("menu.open")
-        view_main(sender)
-    end).permission("op")
+    ---@type ScriptCommand
+    local cmd
 
     service.onEnable = function()
-        command.register()
+        if cmd == nil then
+            cmd = addCommand("config", function(sender, args)
+                sender.sendMessage("menu.open")
+                view_main(sender)
+            end).permission("op")
+        else
+            cmd.register()
+        end
     end
 
     service.onDisable = function()
-        command.unregister()
+        cmd.unregister()
     end
 end

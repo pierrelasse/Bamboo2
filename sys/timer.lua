@@ -1,4 +1,3 @@
-local serviceManager = require("@pierrelasse/bamboo/service/serviceManager")
 local storage = require("@pierrelasse/bamboo/util/Storage").new("timer")
 
 
@@ -22,7 +21,7 @@ function Bamboo.timer.start()
     if Bamboo.timer.task == nil then
         Bamboo.timer.task = every(20, Bamboo.timer.tick)
 
-        for _, service in pairs(serviceManager.entries) do
+        for _, service in pairs(Bamboo.serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
                 service.onTimer(true)
             end
@@ -35,7 +34,7 @@ function Bamboo.timer.stop()
         Bamboo.timer.task.cancel()
         Bamboo.timer.task = nil
 
-        for _, service in pairs(serviceManager.entries) do
+        for _, service in pairs(Bamboo.serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
                 service.onTimer(false)
             end
@@ -57,5 +56,3 @@ Bamboo.timer.time = storage:get("time", 0)
 if storage:get("running") == true then
     Bamboo.timer.start()
 end
-
-return Bamboo.timer

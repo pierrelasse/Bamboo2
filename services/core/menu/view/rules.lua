@@ -19,7 +19,7 @@ local ITM_RIGHT = screens.item(
 local function view(player, prevScreenFunc, page)
     page = page or 1
 
-    local screen = screens.makeScreen("§lRegeln ("..page..")", 9 * 1)
+    local screen = screens.makeScreen("§f七七七七七七七ㇺ", 9 * 1) -- §lRegeln ("..page..")
 
     local maxPages = paginator(
         { 2, 3, 4, 5, 6 },

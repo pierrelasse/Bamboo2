@@ -6,7 +6,7 @@ local view_rules = require("@pierrelasse/bamboo/services/core/menu/view/challeng
 
 
 local function view(player)
-    local screen = screens.makeScreen("§lMenu", InventoryType.HOPPER)
+    local screen = screens.makeScreen("§f七七七七七七七ㇺ", InventoryType.HOPPER)
 
     screens.button(screen, 1, screens.item("COMPARATOR", "§f§lRegeln"), function()
         player.sendMessage("menu.rules")
