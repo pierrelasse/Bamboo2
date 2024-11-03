@@ -47,12 +47,14 @@ function Bamboo.timer.reset()
     Bamboo.timer.time = 0
 end
 
-storage:loadSave(function()
-    storage:set("time", Bamboo.timer.time)
-    storage:set("running", Bamboo.timer.isRunning())
-end)
-Bamboo.timer.time = storage:get("time", 0)
+function Bamboo.timer.load()
+    storage:loadSave(function()
+        storage:set("time", Bamboo.timer.time)
+        storage:set("running", Bamboo.timer.isRunning())
+    end)
+    Bamboo.timer.time = storage:get("time", 0)
 
-if storage:get("running") == true then
-    Bamboo.timer.start()
+    if storage:get("running") == true then
+        Bamboo.timer.start()
+    end
 end

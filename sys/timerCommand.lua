@@ -1,15 +1,19 @@
 addCommand("timer", function(sender, args)
     if args[1] == "continue" then
         Bamboo.timer.start()
-        Send(sender, "§lDer Timer wird nun fortgesetzt.")
+        bukkit.send(sender, Bamboo.translate(
+            Bamboo.getLocale(sender), "timer.command.start"))
     elseif args[1] == "terminate" then
         Bamboo.timer.stop()
-        Send(sender, "§lDer Timer wird nun pausiert.")
+        bukkit.send(sender, Bamboo.translate(
+            Bamboo.getLocale(sender), "timer.command.stop"))
     elseif args[1] == "delete" then
         Bamboo.timer.reset()
-        Send(sender, "§lDer Timer wird nun zurückgesetzt.")
+        bukkit.send(sender, Bamboo.translate(
+            Bamboo.getLocale(sender), "timer.command.reset"))
     else
-        Send(sender, "§cFalsche Verwendung!")
+        bukkit.send(sender, Bamboo.translate(
+            Bamboo.getLocale(sender), "timer.command.usage"))
     end
 end).complete(function(completions, sender, args)
     completions.add("continue")

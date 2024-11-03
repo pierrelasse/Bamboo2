@@ -10,10 +10,12 @@ return function(service)
         if cmd == nil then
             cmd = addCommand("reset", function(sender, args)
                 if args[1] == "confirm" then
-                    Send(sender, "§lDie Welten werden zurückgesetzt.")
+                    bukkit.send(sender, Bamboo.translate(
+                        Bamboo.getLocale(sender), "services.core/resetcmd.success"))
                     FastReset(sender)
                 else
-                    Send(sender, "§cFalsche Verwendung!")
+                    bukkit.send(sender, Bamboo.translate(
+                        Bamboo.getLocale(sender), "services.core/resetcmd.fail"))
                 end
             end).complete(function(completions, sender, args)
                 completions.add("confirm")

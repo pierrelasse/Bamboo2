@@ -13,15 +13,15 @@ local resetting = false
 
 local mainWorld = Bukkit.getWorlds().get(0)
 
-local FAKE_WORLD_ID = "gameworld"
-local fakeWorld = worldmanager.get(FAKE_WORLD_ID)
-if fakeWorld == nil then
-    print("creating game world")
-    local creator = worldmanager.create(FAKE_WORLD_ID)
+local GAME_WORLD_ID = "gameworld"
+local gameWorld = worldmanager.get(GAME_WORLD_ID)
+if gameWorld == nil then
+    Bamboo.debug("loading game world")
+    local creator = worldmanager.create(GAME_WORLD_ID)
     if Bamboo.serviceManager.worldGenOverworld ~= nil then
         creator:setGenerator(Bamboo.serviceManager.worldGenOverworld)
     end
-    fakeWorld = creator:create()
+    gameWorld = creator:create()
 end
 local awaitLocation = Location(mainWorld, 0, -10000, 0, 0, 90)
 
@@ -29,14 +29,14 @@ local awaitLocation = Location(mainWorld, 0, -10000, 0, 0, 90)
 addEvent(PlayerPortalEvent, function(event)
     local to = event.getTo()
     if to.getWorld() == mainWorld then
-        to.setWorld(fakeWorld)
+        to.setWorld(gameWorld)
         event.setTo(to)
     end
 end)
 
 addEvent(PlayerRespawnEvent, function(event)
     if event.getRespawnLocation().getWorld() == mainWorld then
-        event.setRespawnLocation(fakeWorld.getSpawnLocation().clone().add(.5, 0, .5))
+        event.setRespawnLocation(gameWorld.getSpawnLocation().clone().add(.5, 0, .5))
     end
 end)
 
@@ -48,7 +48,7 @@ addEvent(PlayerJoinEvent, function(event)
     end
 
     if not player.hasPlayedBefore() then
-        local loc = fakeWorld.getSpawnLocation().clone().add(.5, 0, .5)
+        local loc = gameWorld.getSpawnLocation().clone().add(.5, 0, .5)
         player.setRespawnLocation(loc)
         player.teleport(loc)
         player.resetTitle()
@@ -62,7 +62,9 @@ function FastReset(sender)
 
     Bamboo.timer.reset()
 
-    BroadcastActionBar("Reset von "..sender.getName().." veranlasst")
+    for player in bukkit.onlinePlayersLoop() do
+        bukkit.sendActionBar(player, Bamboo.translateF(Bamboo.getLocale(player), "reset.by", sender.getName()))
+    end
 
     for player in bukkit.onlinePlayersLoop() do
         player.teleport(awaitLocation)
@@ -80,7 +82,7 @@ function FastReset(sender)
         end
 
         for player in bukkit.onlinePlayersLoop() do
-            player.sendTitle(progress, "§lWelten werden zurückgesetzt", 0, 999999, 0)
+            player.sendTitle(progress, Bamboo.translate(Bamboo.getLocale(player), "reset.deleting"), 0, 999999, 0)
         end
     end
     doTitle(0, 6)
@@ -91,10 +93,10 @@ function FastReset(sender)
     end)
 
     do
-        worldmanager.delete(FAKE_WORLD_ID)
+        worldmanager.delete(GAME_WORLD_ID)
         doTitle(1, 6)
-        local creator = worldmanager.create(FAKE_WORLD_ID)
-        fakeWorld = creator:create()
+        local creator = worldmanager.create(GAME_WORLD_ID)
+        gameWorld = creator:create()
     end
     doTitle(2, 6)
     do
@@ -120,15 +122,10 @@ function FastReset(sender)
     end
     doTitle(6, 6)
 
-    do
-        local m = "§lServer Reset"
-        m = m.."\n§7Der Server wurde zurückgesetzt."
-        m = m.."\n§7Du kannst direkt wieder verbinden."
-        m = m.."\n"
-        for player in bukkit.onlinePlayersLoop() do
-            player.kickPlayer(m)
-        end
+    for player in bukkit.onlinePlayersLoop() do
+        player.kickPlayer(Bamboo.translate(Bamboo.getLocale(player), "reset.finish"))
     end
+
 
     local mainWorldFolder = mainWorld.getWorldFolder()
     fs.remove(fs.file(mainWorldFolder, "advancements"), true)

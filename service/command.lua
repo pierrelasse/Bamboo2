@@ -1,41 +1,47 @@
 addCommand("service", function(sender, args)
     if #args == 0 then
-        -- TODO
-        sender.sendMessage("§7Services: "..table.concat(table.keys(Bamboo.serviceManager.entries), ", "))
+        bukkit.send(sender, Bamboo.translateF(
+            Bamboo.getLocale(sender), "service.command.list",
+            table.concat(table.keys(Bamboo.serviceManager.entries), ", ")))
         return
     end
 
     local service = Bamboo.serviceManager.entries[args[1]]
     if service == nil then
-        sender.sendMessage("§cService not found")
+        bukkit.send(sender, Bamboo.translate(
+            Bamboo.getLocale(sender), "service.command.notfound"))
         return
     end
 
     local action = args[2]
     if action == nil then
-        local msg = "§l"..service.id.."§8:"
-        msg = msg.."\n §7Status: "..(service.enabled and "§aActive" or "§cInactive")
-        sender.sendMessage(msg)
+        bukkit.send(sender, Bamboo.translateF(
+            Bamboo.getLocale(sender), "service.command.status", service.id,
+            Bamboo.translate(Bamboo.getLocale(sender), service.enabled and "service.enabled" or "service.disabled")
+        ))
         return
     end
 
     if action == "enable" then
         if service:setEnabled(true) then
-            sender.sendMessage("§2"..service.id.."§a enabled")
+            bukkit.send(sender, Bamboo.translateF(
+                Bamboo.getLocale(sender), "service.command.enable", service.id))
         end
         return
     end
 
     if action == "disable" then
         if service:setEnabled(false) then
-            sender.sendMessage("§2"..service.id.."§a disabled")
+            bukkit.send(sender, Bamboo.translateF(
+                Bamboo.getLocale(sender), "service.command.disable", service.id))
         end
         return
     end
 
     if action == "reset" then
         service:doReset()
-        sender.sendMessage("§2"..service.id.."§a resetted")
+        bukkit.send(sender, Bamboo.translateF(
+            Bamboo.getLocale(sender), "service.command.reset", service.id))
         return
     end
 
@@ -46,14 +52,16 @@ addCommand("service", function(sender, args)
             handler = service.tasks[id]
         end
         if handler == nil then
-            sender.sendMessage("§cTask not found")
+            bukkit.send(sender, Bamboo.translate(
+                Bamboo.getLocale(sender), "service.command.task_not_found"))
             return
         end
         handler(sender, args)
         return
     end
 
-    sender.sendMessage("§cAction not found")
+    bukkit.send(sender, Bamboo.translate(
+        Bamboo.getLocale(sender), "service.command.action_not_found"))
 end).permission("op")
     .complete(function(completions, sender, args)
         local function complete(value, i)

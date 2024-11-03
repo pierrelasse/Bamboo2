@@ -12,6 +12,8 @@ require("@bukkit/basic")
 do
     Bamboo = {}
 
+    require("@pierrelasse/bamboo/util/Helper")
+
     require("@pierrelasse/bamboo/util/logger")
 
     Bamboo._debugLogger = Bamboo.logger("debug")
@@ -21,9 +23,12 @@ do
 
     require("@pierrelasse/bamboo/util/static")
 
-    require("@pierrelasse/bamboo/sys/fastreset")
+    require("@pierrelasse/bamboo/lang/index")
+
     require("@pierrelasse/bamboo/sys/timer")
     require("@pierrelasse/bamboo/sys/timerCommand")
+
+    require("@pierrelasse/bamboo/sys/fastreset")
 
     require("@pierrelasse/bamboo/service/serviceManager")
     require("@pierrelasse/bamboo/service/command")
@@ -31,6 +36,9 @@ do
     require("@pierrelasse/bamboo/dev/index")
 
     require("@pierrelasse/bamboo/sys/lagprot")
+
+    Bamboo.timer.load()
+    Bamboo.serviceManager.load()
 end
 
 -- Util

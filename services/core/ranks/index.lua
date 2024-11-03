@@ -1,6 +1,7 @@
 local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 local simpleteams = require("@bukkit/scoreboard/simpleteams")
+local specialChars = require("@pierrelasse/bamboo/util/specialChars")
 
 
 local function numToLetter(num)
@@ -23,18 +24,30 @@ return function(service)
     local ranks = {
         dev = {
             sort = numToLetter(1),
-            tab = bukkit.hex("§#2C3434[§r瀅§#2C3434] §#3ED9BA%s"),
-            ntPrefix = bukkit.hex("§#2C3434[§r瀅§#2C3434] §#3ED9BA"),
-            chPrefix = bukkit.hex("§#2C3434[§r瀅§#2C3434] §#3ED9BA"),
+            tab = bukkit.hex("§#2C3434[§r"..specialChars.rank_dev.."§#2C3434] §#F25879%s"),
+            ntPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_dev.."§#2C3434] §#F25879"),
+            chPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_dev.."§#2C3434] §#F25879"),
+        },
+        team = {
+            sort = numToLetter(2),
+            tab = bukkit.hex("§#2C3434[§r"..specialChars.rank_team.."§#2C3434] §#7B82EA%s"),
+            ntPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_team.."§#2C3434] §#7B82EA"),
+            chPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_team.."§#2C3434] §#7B82EA"),
+        },
+        mod = {
+            sort = numToLetter(3),
+            tab = bukkit.hex("§#2C3434[§r"..specialChars.rank_mod.."§#2C3434] §#14CB01%s"),
+            ntPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_mod.."§#2C3434] §#14CB01"),
+            chPrefix = bukkit.hex("§#2C3434[§r"..specialChars.rank_mod.."§#2C3434] §#14CB01"),
         },
         vip = {
-            sort = numToLetter(2),
-            tab = bukkit.hex("§#3D2A41[§r瀂§#3D2A41] §#C342DA%s"),
-            ntPrefix = bukkit.hex("§#3D2A41[§r瀂§#3D2A41] §#C342DA"),
-            chPrefix = bukkit.hex("§#3D2A41[§r瀂§#3D2A41] §#C342DA"),
+            sort = numToLetter(4),
+            tab = bukkit.hex("§#3D2A41[§r"..specialChars.rank_vip.."§#3D2A41] §#FF0090%s"),
+            ntPrefix = bukkit.hex("§#3D2A41[§r"..specialChars.rank_vip.."§#3D2A41] §#FF0090"),
+            chPrefix = bukkit.hex("§#3D2A41[§r"..specialChars.rank_vip.."§#3D2A41] §#FF0090"),
         },
         default = {
-            sort = numToLetter(3),
+            sort = numToLetter(5),
             tab = "%s",
             ntPrefix = "",
             chPrefix = "",
@@ -42,7 +55,7 @@ return function(service)
     }
 
     function service.exports.getRankData(name)
-        if name == "pierrelasse" or name == "No1KnowsMyName_" then
+        if name == "pierrelasse" or "No1KnowsMyName_" then
             return ranks.dev
         end
         if name == "Cybergamer_1_" then
@@ -73,6 +86,16 @@ return function(service)
     service.onEnable = function()
         for player in bukkit.onlinePlayersLoop() do
             service.exports.updatePlayer(player)
+        end
+    end
+
+    service.onDisable = function()
+        for player in bukkit.onlinePlayersLoop() do
+            local team = simpleteams.getPlayerTeam(player)
+            if team ~= nil then
+                team.unregister()
+            end
+            simpleteams.setPlayerListName(player, nil)
         end
     end
 end

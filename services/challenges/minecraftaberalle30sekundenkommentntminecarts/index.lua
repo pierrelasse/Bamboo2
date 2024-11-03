@@ -12,6 +12,7 @@ return function(service)
     local task
     local time = 0
     local INTERVAL = 30
+    local forceCount
 
     service.onEnable = function()
         task = every(20, function()
@@ -32,11 +33,12 @@ return function(service)
                     if player.getGameMode().name() == "SURVIVAL" then
                         local loc = player.getLocation().clone().add(0, math.random(-1, 4), 0)
                         local world = loc.getWorld()
-                        local amount = math.random(1,
-                                                   math.random(0, 1) == 0
-                                                   and math.random(1, 3)
-                                                   or math.random(1, 10) + math.random(0, 40))
-                        bukkit.sendTitle(player, nil, "§c"..amount)
+                        local amount = forceCount
+                            or math.random(1,
+                                           math.random(0, 1) == 0
+                                           and math.random(1, 3)
+                                           or math.random(1, 10) + math.random(0, 40))
+                        bukkit.sendTitle(player, "", "§c"..amount)
                         for _ = 1, amount do
                             world.spawn(loc, ExplosiveMinecart)
                         end
@@ -60,6 +62,11 @@ return function(service)
     end)
 
     service:addTask("now", function(sender)
-        time = INTERVAL
+        time = INTERVAL - 2
+    end)
+
+    service:addTask("forcecount", function(sender, args)
+        forceCount = tonumber(args[3])
+        bukkit.send(sender, "§7Set count to §e"..(forceCount or "<standard>"))
     end)
 end

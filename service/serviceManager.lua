@@ -58,5 +58,3 @@ function serviceManager.get(id)
 end
 
 Bamboo.serviceManager = serviceManager
-
-serviceManager.load()

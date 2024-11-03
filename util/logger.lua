@@ -11,7 +11,7 @@ Bamboo.logger = logger.new
 
 function logger:broadcast(rawMessage)
     for player in bukkit.onlinePlayersLoop() do
-        if player.getName() == "pierrelasse" or player.getName() == "LCHEETAH" then -- TODO: less cracky
+        if player.getName() == "pierrelasse" or player.getName() == "No1KnowsMyName_" then -- TODO: less cracky
             player.sendMessage(rawMessage)
             break
         end

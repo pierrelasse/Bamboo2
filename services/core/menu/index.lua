@@ -12,7 +12,6 @@ return function(service)
     service.onEnable = function()
         if cmd == nil then
             cmd = addCommand("config", function(sender, args)
-                sender.sendMessage("menu.open")
                 view_main(sender)
             end).permission("op")
         else

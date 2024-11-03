@@ -6,15 +6,39 @@ local view_rules = require("@pierrelasse/bamboo/services/core/menu/view/challeng
 
 
 local function view(player)
+    local locale = Bamboo.getLocale(player)
+
     local screen = screens.makeScreen("§f七七七七七七七ㇺ", InventoryType.HOPPER)
 
-    screens.button(screen, 1, screens.item("COMPARATOR", "§f§lRegeln"), function()
-        player.sendMessage("menu.rules")
+    local offset = -1
+
+    local task = every(1, function()
+        offset = offset - .08
+        if offset < -1 then
+            offset = 1
+        end
+
+        do
+            local itm = bukkit.buildItem("COMPARATOR")
+            itm.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
+                Bamboo.translate(locale, "services.core/menu.main.rules")))
+            screen:set(1, itm:build())
+        end
+    end)
+
+
+    screen.onClose = function()
+        task.cancel()
+    end
+
+    screens.button(screen, 1, nil, function()
         view_rules(player, view)
     end)
 
-    screens.button(screen, 3, screens.item("BOOKSHELF", "§f§lModifikationen"), function()
-        player.sendMessage("menu.mods")
+    itemBuilder = bukkit.buildItem("BOOKSHELF")
+    itemBuilder.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D><b>"..
+        Bamboo.translate(locale, "services.core/menu.main.mods")))
+    screens.button(screen, 3, itemBuilder:build(), function()
         view_challenges(player, view)
     end)
 

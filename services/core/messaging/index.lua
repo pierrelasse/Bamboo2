@@ -9,23 +9,25 @@ return function(service)
     service.onEnable = function()
         if cmd == nil then
             cmd =
-                addCommand({ "msg", "w", "tell", "minecraft:msg", "minecraft:w", "minecraft:tell" },
-                    function(sender, args)
-                        if args[1] == nil then
-                            sender.sendMessage("§cUsage: /msg <spieler> <nachricht...>")
-                            return
-                        end
+                addCommand({ "msg", "w", "tell" }, function(sender, args)
+                    if args[1] == nil then
+                        sender.sendMessage("§cUsage: /msg <spieler> <nachricht...>")
+                        return
+                    end
 
-                        local target = bukkit.getPlayer(args[1])
-                        if target == nil or not sender.canSee(target) or sender == target then
-                            sender.sendMessage("§cSpieler nicht gefunden")
-                            return
-                        end
+                    local target = bukkit.getPlayer(args[1])
+                    if target == nil or not sender.canSee(target) or sender == target then
+                        bukkit.send(sender, Bamboo.translate(
+                            Bamboo.getLocale(sender), "services.core/messaging.not_found"))
+                        return
+                    end
 
-                        local message = table.concat(args, " ", 2)
-                        sender.sendMessage("§dZu "..target.getName()..":§r "..message)
-                        target.sendMessage("§dVon "..sender.getName()..":§r "..message)
-                    end)
+                    local message = table.concat(args, " ", 2)
+                    bukkit.send(sender, Bamboo.translateF(
+                        Bamboo.getLocale(sender), "services.core/messaging.to", target.getName(), message))
+                    bukkit.send(target, Bamboo.translateF(
+                        Bamboo.getLocale(target), "services.core/messaging.from", sender.getName(), message))
+                end)
                 .complete(function(completions, sender, args)
                     if #args == 1 then
                         for player in bukkit.onlinePlayersLoop() do
