@@ -13,7 +13,7 @@ local function view(player)
     local offset = -1
 
     local task = every(1, function()
-        offset = offset - .08
+        offset = offset - .05
         if offset < -1 then
             offset = 1
         end
@@ -24,8 +24,14 @@ local function view(player)
                 Bamboo.translate(locale, "services.core/menu.main.rules")))
             screen:set(1, itm:build())
         end
-    end)
 
+        do
+            local itm = bukkit.buildItem("BOOKSHELF")
+            itm.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
+                Bamboo.translate(locale, "services.core/menu.main.mods")))
+            screen:set(3, itm:build())
+        end
+    end)
 
     screen.onClose = function()
         task.cancel()
@@ -35,10 +41,7 @@ local function view(player)
         view_rules(player, view)
     end)
 
-    itemBuilder = bukkit.buildItem("BOOKSHELF")
-    itemBuilder.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D><b>"..
-        Bamboo.translate(locale, "services.core/menu.main.mods")))
-    screens.button(screen, 3, itemBuilder:build(), function()
+    screens.button(screen, 3, nil, function()
         view_challenges(player, view)
     end)
 

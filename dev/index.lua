@@ -4,6 +4,7 @@ local it = {
     "CONVERSATION_WTF",
     "DISPLAYFUNNYTITLE",
     "DYNCMD",
+    "MATHE_INPUT",
     "FUNNY_FLYING_TNT",
     "MINIMESSAGE",
     "MULTI_ASYNC",

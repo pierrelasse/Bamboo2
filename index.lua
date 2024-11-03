@@ -49,3 +49,6 @@ require("@bukkit/plugins/eval")
 
 paman.need("bukkit/plugins/itemEdit")
 require("@bukkit/plugins/itemEdit")
+
+
+require("@pierrelasse/bamboo/util/chatInput")
