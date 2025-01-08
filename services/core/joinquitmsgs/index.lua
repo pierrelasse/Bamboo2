@@ -6,8 +6,7 @@ local PlayerQuitEvent = classFor("org.bukkit.event.player.PlayerQuitEvent")
 return function(service)
     service.enabledByDefault = true
     service.meta_type = "core"
-
-    local logger = Bamboo.logger("joinquitmsgs")
+    local logger = service:logger()
 
     service:event(PlayerJoinEvent, function(event)
         event.setJoinMessage(nil)

@@ -57,15 +57,15 @@ return function(service)
         time = 0
     end
 
-    service:addTask("get_time", function(sender)
+    service:task("get_time", function(sender)
         sender.sendMessage("§7Time: §e"..time.."/"..INTERVAL)
     end)
 
-    service:addTask("now", function(sender)
+    service:task("now", function(sender)
         time = INTERVAL - 2
     end)
 
-    service:addTask("forcecount", function(sender, args)
+    service:task("forcecount", function(sender, args)
         forceCount = tonumber(args[3])
         bukkit.send(sender, "§7Set count to §e"..(forceCount or "<standard>"))
     end)

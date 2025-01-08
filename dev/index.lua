@@ -10,6 +10,7 @@ local it = {
     "MULTI_ASYNC",
     "NAMETAGS",
     "RAINBOW_SB",
+    "RAYTRACE_COOL",
     "RGB_PLAYER_LIST_NAME",
     "SB_REVIEW",
     "SOUNDCHECK",

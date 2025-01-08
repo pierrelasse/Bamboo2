@@ -7,10 +7,10 @@ return function(service)
     service.meta_type = "core"
 
     function service.exports(input)
-        input = string.replace(input, ":skull:", "💀")
-        input = string.replace(input, ":sus:", "ඞ")
-        input = string.replace(input, ":peepohey:", specialChars.emoji_peepohey)
-        input = string.replace(input, ":schneemann:", specialChars.emoji_snowman)
+        input = Bamboo.Helper.stringReplace(input, ":skull:", "💀")
+        input = Bamboo.Helper.stringReplace(input, ":sus:", "ඞ")
+        input = Bamboo.Helper.stringReplace(input, ":peepohey:", specialChars.emoji_peepohey)
+        input = Bamboo.Helper.stringReplace(input, ":schneemann:", specialChars.emoji_snowman)
 
         return input
     end

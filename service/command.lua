@@ -1,8 +1,16 @@
 addCommand("service", function(sender, args)
     if #args == 0 then
+        local servicesStr = ""
+        for serviceId, service in pairs(Bamboo.serviceManager.entries) do
+            if #servicesStr ~= 0 then
+                servicesStr = servicesStr.."\n§8 - "
+            end
+            servicesStr = servicesStr..(service.enabled and "§a" or "§c")..serviceId
+        end
+
         bukkit.send(sender, Bamboo.translateF(
             Bamboo.getLocale(sender), "service.command.list",
-            table.concat(table.keys(Bamboo.serviceManager.entries), ", ")))
+            servicesStr))
         return
     end
 

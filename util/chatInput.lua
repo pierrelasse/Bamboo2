@@ -1,7 +1,7 @@
 local AsyncPlayerChatEvent = classFor("org.bukkit.event.player.AsyncPlayerChatEvent")
 
 
----@class pierrelasse.bamboo.util.chatInput.Id : string
+---@class pierrelasse.bamboo.util.chatInput.Id: string
 
 ---@class pierrelasse.bamboo.util.chatInput.Data
 ---@field timeout integer? in ticks

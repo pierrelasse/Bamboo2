@@ -85,18 +85,9 @@ end
 
 ---@param id string
 ---@param handler fun(sender: JavaObject, args: string[])
-function Service:addTask(id, handler)
+function Service:task(id, handler)
     if self.tasks == nil then self.tasks = {} end
     self.tasks[id] = handler
-end
-
-function Service:event(eventClass, handler)
-    if self.events == nil then self.events = {} end
-
-    local event = addEvent(eventClass, handler, self.enabled)
-    self.events[#self.events + 1] = event
-
-    return event
 end
 
 function Service:registerEvents()
@@ -111,6 +102,22 @@ function Service:unregisterEvents()
     for _, event in ipairs(self.events) do
         event.unregister()
     end
+end
+
+---@param eventClass JavaClass
+---@param handler fun(event: JavaObject)
+---@return ScriptEvent
+function Service:event(eventClass, handler)
+    if self.events == nil then self.events = {} end
+
+    local event = addEvent(eventClass, handler, self.enabled)
+    self.events[#self.events + 1] = event
+
+    return event
+end
+
+function Service:logger()
+    return Bamboo.logger("srv:"..self.id)
 end
 
 return Service

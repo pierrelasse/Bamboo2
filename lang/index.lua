@@ -32,7 +32,7 @@ function Bamboo.translateF(locale, key, ...)
     local values = { ... }
     local translated = Bamboo.translate(locale, key)
     for i, value in ipairs(values) do
-        translated = string.replace(translated, "{"..(i - 1).."}", value)
+        translated = Bamboo.Helper.stringReplace(translated, "{"..(i - 1).."}", tostring(value))
     end
     return translated
 end

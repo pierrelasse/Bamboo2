@@ -1,3 +1,4 @@
+local BigInteger = classFor("java.math.BigInteger")
 local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
 
 
@@ -7,20 +8,28 @@ return function(service)
     service.meta_type = "core"
 
     local url = "https://bluept.net/cdn2/Bamboo2-Resources.zip"
-    local sha1 = "79bceeb09259117a744fb45a7d77a4b0d5ccb493"
+    ---@type JavaObject
+    local sha1
+    local function setSha1(hash)
+        sha1 = Bamboo.Helper.sha1FromStr(hash)
+    end
+    setSha1("20b075a3458e1b9935e51450c63e6032c3f4c779")
 
-    -- service:event(PlayerJoinEvent, function(event)
-    --     local player = event.getPlayer()
-    --     player.setResourcePack(url, sha1)
-    -- end)
-
-    service:addTask("set_url", function(sender, args)
+    service:task("set_url", function(sender, args)
         url = args[3] or ""
         bukkit.send(sender, "§7URL set to: §r"..url)
     end)
 
-    service:addTask("set_sha1", function(sender, args)
-        sha1 = args[3] or ""
+    service:task("set_sha1", function(sender, args)
+        setSha1(args[3] or "")
         bukkit.send(sender, "§7Sha1 set to: §r"..sha1)
+    end)
+
+    service:event(PlayerJoinEvent, function(event)
+        local message = bukkit.hex(
+            "§#1CFF31§lBenötigte Assets für Bamboo!"
+        )
+        local player = event.getPlayer()
+        player.setResourcePack(url, sha1, message, true)
     end)
 end
