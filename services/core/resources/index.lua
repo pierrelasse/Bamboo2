@@ -30,6 +30,6 @@ return function(service)
             "§#1CFF31§lBenötigte Assets für Bamboo!"
         )
         local player = event.getPlayer()
-        player.setResourcePack(url, sha1, message, true)
+        player.setResourcePack(url, sha1, message, not player.isOp())
     end)
 end

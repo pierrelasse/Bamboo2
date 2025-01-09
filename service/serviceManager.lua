@@ -8,6 +8,7 @@ local IDS = {
     "core/joinquitmsgs",
     "core/menu",
     "core/messaging",
+    "core/motd",
     "core/ranks",
     "core/resetcmd",
     "core/resources",
