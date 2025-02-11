@@ -78,7 +78,13 @@ end
 ---@param storage pierrelasse.bamboo.util.Storage
 ---@param path string
 function Service:save(storage, path)
-    storage:set(path..".enabled", self.enabled and true or nil)
+    local savedState
+    if self.enabled == self.enabledByDefault then
+        savedState = nil
+    else
+        savedState = self.enabled
+    end
+    storage:set(path..".enabled", savedState)
 
     storage:clearIfEmpty(path)
 end

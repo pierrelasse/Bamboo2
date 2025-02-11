@@ -24,7 +24,9 @@ addCommand("timer", function(sender, args)
     end
 end)
     .complete(function(completions, sender, args)
-        completions.add("continue")
-        completions.add("terminate")
-        completions.add("delete")
+        if #args == 1 then
+            completions.add("continue")
+            completions.add("terminate")
+            completions.add("delete")
+        end
     end)

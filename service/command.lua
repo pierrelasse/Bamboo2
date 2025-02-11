@@ -2,9 +2,7 @@ addCommand("service", function(sender, args)
     if #args == 0 then
         local servicesStr = ""
         for serviceId, service in pairs(Bamboo.serviceManager.entries) do
-            if #servicesStr ~= 0 then
-                servicesStr = servicesStr.."\n§8 - "
-            end
+            servicesStr = servicesStr.."\n§8 - "
             servicesStr = servicesStr..(service.enabled and "§a" or "§c")..serviceId
         end
 
@@ -70,7 +68,8 @@ addCommand("service", function(sender, args)
 
     bukkit.send(sender, Bamboo.translate(
         Bamboo.getLocale(sender), "service.command.action_not_found"))
-end).permission("op")
+end)
+    .permission("op")
     .complete(function(completions, sender, args)
         local function complete(value, i)
             if args[i] == nil or string.startswith(value, args[i]) then

@@ -5,11 +5,8 @@ local MESSAGE_SUDOING = "§7Sudoing §e%s§7:§f %s"
 require("@bukkit/send")
 local _targets = require("@pierrelasse/bamboo/admincommands/_targets")
 
-local targeter = _targets.LIKE_PROB_THE_ONLY_USED_ONE_LOL
-
-
 addCommand("sudo", function(sender, args)
-    local target = targeter.find(sender, args[1])
+    local target = _targets.find(sender, args[1])
     if target == nil then
         bukkit.send(sender, MESSAGE_TARGET_NOT_FOUND)
         return
@@ -24,7 +21,7 @@ end)
     .permission(PERMISSION_COMMAND)
     .complete(function(completions, sender, args)
         if #args == 1 then
-            targeter.complete(sender, completions, args[1])
+            _targets.complete(sender, completions, args[1])
         elseif #args == 2 then
             completions.add("/")
         end

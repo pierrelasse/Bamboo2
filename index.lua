@@ -6,6 +6,12 @@ paman.need("bukkit/scoreboard/simpleteams")
 paman.need("bukkit/worldmanager")
 paman.need("core/classloader")
 
+require("@core/index")
+-- require("@tests/index")
+-- tests.runMultiple(
+--     require("@tests/tests/core/index")
+-- )
+
 require("@bukkit/basic")
 
 -- Bamboo
@@ -28,8 +34,6 @@ do
     require("@pierrelasse/bamboo/sys/timer")
     require("@pierrelasse/bamboo/sys/timerCommand")
 
-    require("@pierrelasse/bamboo/sys/fastreset")
-
     require("@pierrelasse/bamboo/service/serviceManager")
     require("@pierrelasse/bamboo/service/command")
 
@@ -39,6 +43,10 @@ do
 
     Bamboo.timer.load()
     Bamboo.serviceManager.load()
+
+    require("@pierrelasse/bamboo/sys/fastreset")
+
+    require("@pierrelasse/bamboo/util/chatInput")
 end
 
 -- Util
@@ -49,6 +57,3 @@ require("@bukkit/plugins/eval")
 
 paman.need("bukkit/plugins/itemEdit")
 require("@bukkit/plugins/itemEdit")
-
-
-require("@pierrelasse/bamboo/util/chatInput")

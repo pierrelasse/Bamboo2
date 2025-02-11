@@ -13,11 +13,10 @@ end
 ---@param target any
 ---@return string
 function Bamboo.getLocale(target)
-    if instanceof(target, Player) then
+    if bukkit.isPlayer(target) then
         return "de"
-    else
-        return "en"
     end
+    return "en"
 end
 
 function Bamboo.translate(locale, key)

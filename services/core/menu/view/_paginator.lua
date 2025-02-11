@@ -20,5 +20,5 @@ return function(slots, page, filter, setter)
         setter(slot, serviceId == nil and nil or Bamboo.serviceManager.entries[serviceId])
     end
 
-    return table.length(ids) / #slots
+    return #ids / #slots
 end
