@@ -7,10 +7,12 @@ paman.need("bukkit/worldmanager")
 paman.need("core/classloader")
 
 require("@core/index")
--- require("@tests/index")
--- tests.runMultiple(
---     require("@tests/tests/core/index")
--- )
+function RunTests()
+    require("@tests/index")
+    tests.runMultiple(
+        require("@tests/tests/@core/index")
+    )
+end
 
 require("@bukkit/basic")
 

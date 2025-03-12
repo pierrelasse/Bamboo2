@@ -1,9 +1,6 @@
 local LOCALES = { "de", "en" }
 
 
-local Player = classFor("org.bukkit.entity.Player")
-
-
 Bamboo.locales = {}
 
 for _, id in ipairs(LOCALES) do
