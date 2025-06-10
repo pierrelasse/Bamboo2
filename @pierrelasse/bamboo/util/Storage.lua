@@ -1,6 +1,6 @@
-local ScriptStoppingEvent = classFor("net.bluept.scripting.ScriptStoppingEvent")
-local ArrayList = classFor("java.util.ArrayList")
-local YamlConfiguration = classFor("org.bukkit.configuration.file.YamlConfiguration")
+local ScriptStoppingEvent = import("net.bluept.scripting.ScriptStoppingEvent")
+local ArrayList = import("java.util.ArrayList")
+local YamlConfiguration = import("org.bukkit.configuration.file.YamlConfiguration")
 
 local fs = require("@base/fs")
 local logger = require("@pierrelasse/bamboo/util/logger").new("Storage")
@@ -8,8 +8,8 @@ local logger = require("@pierrelasse/bamboo/util/logger").new("Storage")
 
 ---@class pierrelasse.bamboo.util.Storage
 ---@field name string
----@field file JavaObject java.io.File
----@field config JavaObject
+---@field file java.Object java.io.File
+---@field config java.Object
 ---@field saveCb fun()|nil
 local Storage = {}
 Storage.__index = Storage
@@ -62,6 +62,14 @@ function Storage:get(path, def)
     else
         return self.config.get(path, def)
     end
+end
+
+---@param path string
+function Storage:loopKeys(path)
+    ---@type java.Set<string>?
+    local keys = self:getKeys(path)
+    if keys == nil then return function() return nil end end
+    return forEach(keys)
 end
 
 function Storage:set(path, value)

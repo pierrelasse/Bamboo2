@@ -21,9 +21,8 @@ function Helper.stringReplace(s, what, with) end
 ---@return JavaObject
 function Helper.sha1FromStr(hash) end
 
-local classloader = require("@core/classloader")
 classloader.addClassFile("@pierrelasse/bamboo", "pierrelasse_bamboo_Helper")
 
 ---@type pierrelasse.bamboo.Helper
 ---@diagnostic disable-next-line: assign-type-mismatch
-Bamboo.Helper = classFor("pierrelasse_bamboo_Helper")
+Bamboo.Helper = import("pierrelasse_bamboo_Helper")

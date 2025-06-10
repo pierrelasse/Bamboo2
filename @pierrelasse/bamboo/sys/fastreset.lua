@@ -1,17 +1,16 @@
-local Bukkit = classFor("org.bukkit.Bukkit")
-local Location = classFor("org.bukkit.Location")
-local GameMode = classFor("org.bukkit.GameMode")
-local PlayerPortalEvent = classFor("org.bukkit.event.player.PlayerPortalEvent")
-local PlayerRespawnEvent = classFor("org.bukkit.event.player.PlayerRespawnEvent")
-local PlayerMoveEvent = classFor("org.bukkit.event.player.PlayerMoveEvent")
-local PlayerJoinEvent = classFor("org.bukkit.event.player.PlayerJoinEvent")
+local Location = import("org.bukkit.Location")
+local GameMode = import("org.bukkit.GameMode")
+local PlayerPortalEvent = import("org.bukkit.event.player.PlayerPortalEvent")
+local PlayerRespawnEvent = import("org.bukkit.event.player.PlayerRespawnEvent")
+local PlayerMoveEvent = import("org.bukkit.event.player.PlayerMoveEvent")
+local PlayerJoinEvent = import("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
 local worldmanager = require("@bukkit/worldmanager/worldmanager")
 
-local resetting = false
 
-local mainWorld = Bukkit.getWorlds().get(0)
+local resetting = false
+local mainWorld = bukkit.defaultWorld()
 
 local GAME_WORLD_ID = "gameworld"
 local gameWorld = worldmanager.get(GAME_WORLD_ID)
@@ -62,11 +61,11 @@ function FastReset(sender)
 
     Bamboo.timer.reset()
 
-    for player in bukkit.onlinePlayersLoop() do
+    for player in bukkit.playersLoop() do
         bukkit.sendActionBar(player, Bamboo.translateF(Bamboo.getLocale(player), "reset.by", sender.getName()))
     end
 
-    for player in bukkit.onlinePlayersLoop() do
+    for player in bukkit.playersLoop() do
         player.teleport(awaitLocation)
         player.setGameMode(GameMode.SPECTATOR)
     end
@@ -81,7 +80,7 @@ function FastReset(sender)
             progress = progress.."-"
         end
 
-        for player in bukkit.onlinePlayersLoop() do
+        for player in bukkit.playersLoop() do
             player.sendTitle(progress, Bamboo.translate(Bamboo.getLocale(player), "reset.deleting"), 0, 999999, 0)
         end
     end
@@ -122,7 +121,7 @@ function FastReset(sender)
     end
     doTitle(6, 6)
 
-    for player in bukkit.onlinePlayersLoop() do
+    for player in bukkit.playersLoop() do
         player.kickPlayer(Bamboo.translate(Bamboo.getLocale(player), "reset.finish"))
     end
 

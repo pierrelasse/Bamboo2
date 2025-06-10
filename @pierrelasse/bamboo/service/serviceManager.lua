@@ -1,7 +1,7 @@
 local IDS = {
-    "challenges/bba",
     "challenges/blockdroprandomizer",
     "challenges/minecraftaberalle30sekundenkommentntminecarts",
+    "challenges/mobarmeerandomizer",
 
     "core/chat",
     "core/chat-emojis",
@@ -45,7 +45,7 @@ function serviceManager.load()
     for _, id in ipairs(IDS) do
         ---@type pierrelasse.bamboo.Service
         local service = Service.new(id)
-        require("@pierrelasse/bamboo/services/"..id.."/index")(service)
+        require("@pierrelasse/bamboo/services/"..id.."/")(service)
         service:load(storage, "services."..id)
         serviceManager.entries[id] = service
     end

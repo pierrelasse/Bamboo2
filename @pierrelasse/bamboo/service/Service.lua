@@ -90,7 +90,7 @@ function Service:save(storage, path)
 end
 
 ---@param id string
----@param handler fun(sender: JavaObject, args: string[])
+---@param handler fun(sender: java.Object, args: string[])
 function Service:task(id, handler)
     if self.tasks == nil then self.tasks = {} end
     self.tasks[id] = handler
@@ -110,8 +110,8 @@ function Service:unregisterEvents()
     end
 end
 
----@param eventClass JavaClass
----@param handler fun(event: JavaObject)
+---@param eventClass java.class
+---@param handler fun(event: java.Object)
 ---@return ScriptEvent
 function Service:event(eventClass, handler)
     if self.events == nil then self.events = {} end

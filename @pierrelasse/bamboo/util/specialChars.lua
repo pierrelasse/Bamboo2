@@ -22,10 +22,10 @@ local list = {
 }
 
 
-local ClickEvent = classFor("net.md_5.bungee.api.chat.ClickEvent")
-local ClickEvent_Action = classFor("net.md_5.bungee.api.chat.ClickEvent$Action")
-local ComponentBuilder = classFor("net.md_5.bungee.api.chat.ComponentBuilder")
-local TextComponent = classFor("net.md_5.bungee.api.chat.TextComponent")
+local ClickEvent = import("net.md_5.bungee.api.chat.ClickEvent")
+local ClickEvent_Action = import("net.md_5.bungee.api.chat.ClickEvent$Action")
+local ComponentBuilder = import("net.md_5.bungee.api.chat.ComponentBuilder")
+local TextComponent = import("net.md_5.bungee.api.chat.TextComponent")
 
 
 function Bamboo.specialChar(sender)

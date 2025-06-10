@@ -35,7 +35,7 @@ end
 
 ---@param screen bukkit.guimaker.GUI
 ---@param slot integer
----@param itemStack JavaObject
+---@param itemStack java.Object?
 ---@param cb fun(event: bukkit.guimaker.ClickEvent)
 function screens.button(screen, slot, itemStack, cb)
     screen:set(slot, itemStack)

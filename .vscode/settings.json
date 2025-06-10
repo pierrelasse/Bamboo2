@@ -1,8 +1,0 @@
-{
-    "Lua.workspace.library": [
-        "D:/Dev/scripting/@base",
-        "D:/Dev/scripting/@bukkit",
-        "D:/Dev/scripting/@core",
-        "D:/Dev/scripting/@tests"
-    ]
-}

@@ -1,25 +1,25 @@
 local storage = require("@pierrelasse/bamboo/util/Storage").new("timer")
 
 
-Bamboo.timer = {
-    ---@type ScriptTask|nil
+local this = {
+    ---@type ScriptTask?
     task = nil,
 
     ---@type integer
     time = nil
 }
 
-function Bamboo.timer.tick()
-    Bamboo.timer.time = Bamboo.timer.time + 1
+function this.tick()
+    this.time = this.time + 1
 end
 
-function Bamboo.timer.isRunning()
-    return Bamboo.timer.task ~= nil
+function this.isRunning()
+    return this.task ~= nil
 end
 
-function Bamboo.timer.start()
-    if Bamboo.timer.task == nil then
-        Bamboo.timer.task = every(20, Bamboo.timer.tick)
+function this.start()
+    if this.task == nil then
+        this.task = every(20, this.tick)
 
         for _, service in pairs(Bamboo.serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
@@ -29,10 +29,10 @@ function Bamboo.timer.start()
     end
 end
 
-function Bamboo.timer.stop()
-    if Bamboo.timer.task ~= nil then
-        Bamboo.timer.task.cancel()
-        Bamboo.timer.task = nil
+function this.stop()
+    if this.task ~= nil then
+        this.task.cancel()
+        this.task = nil
 
         for _, service in pairs(Bamboo.serviceManager.entries) do
             if service.onTimer ~= nil and service.enabled then
@@ -42,19 +42,21 @@ function Bamboo.timer.stop()
     end
 end
 
-function Bamboo.timer.reset()
-    Bamboo.timer.stop()
-    Bamboo.timer.time = 0
+function this.reset()
+    this.stop()
+    this.time = 0
 end
 
-function Bamboo.timer.load()
+function this.load()
     storage:loadSave(function()
-        storage:set("time", Bamboo.timer.time)
-        storage:set("running", Bamboo.timer.isRunning())
+        storage:set("time", this.time)
+        storage:set("running", this.isRunning())
     end)
-    Bamboo.timer.time = storage:get("time", 0)
+    this.time = storage:get("time", 0)
 
     if storage:get("running") == true then
-        Bamboo.timer.start()
+        this.start()
     end
 end
+
+Bamboo.timer = this

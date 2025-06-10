@@ -10,8 +10,8 @@ end
 Bamboo.logger = logger.new
 
 function logger:broadcast(rawMessage)
-    for player in bukkit.onlinePlayersLoop() do
-        if player.getName() == "pierrelasse" or player.getName() == "No1KnowsMyName_" then -- TODO: less cracky
+    for player in bukkit.playersLoop() do
+        if player.getName() == "pierrelasse" or player.getName() == "No1KnowsMyName_" then
             player.sendMessage(rawMessage)
             break
         end

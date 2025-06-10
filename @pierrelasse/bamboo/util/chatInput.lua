@@ -1,4 +1,4 @@
-local AsyncPlayerChatEvent = classFor("org.bukkit.event.player.AsyncPlayerChatEvent")
+local AsyncPlayerChatEvent = import("org.bukkit.event.player.AsyncPlayerChatEvent")
 
 
 ---@class pierrelasse.bamboo.util.chatInput.Id: string

@@ -1,4 +1,4 @@
-local InventoryType = classFor("org.bukkit.event.inventory.InventoryType")
+local InventoryType = import("org.bukkit.event.inventory.InventoryType")
 
 local screens = require("@pierrelasse/bamboo/util/screens")
 local view_challenges = require("@pierrelasse/bamboo/services/core/menu/view/challenges")
@@ -20,14 +20,14 @@ local function view(player)
 
         do
             local itm = bukkit.buildItem("COMPARATOR")
-            itm.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
+            itm.meta.displayName(comp.mm("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
                 Bamboo.translate(locale, "services.core/menu.main.rules")))
             screen:set(1, itm:build())
         end
 
         do
             local itm = bukkit.buildItem("BOOKSHELF")
-            itm.meta.displayName(ToMiniMessage("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
+            itm.meta.displayName(comp.mm("<gradient:#4CE400:#2E5B0D:"..offset.."><b>"..
                 Bamboo.translate(locale, "services.core/menu.main.mods")))
             screen:set(3, itm:build())
         end
