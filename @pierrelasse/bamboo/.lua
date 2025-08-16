@@ -1,3 +1,7 @@
+require("@base/paman").needs(
+    "bukkit/worldmanager"
+)
+
 Bamboo = {}
 
 require("@pierrelasse/bamboo/util/Helper")

@@ -6,17 +6,17 @@ local PlayerMoveEvent = import("org.bukkit.event.player.PlayerMoveEvent")
 local PlayerJoinEvent = import("org.bukkit.event.player.PlayerJoinEvent")
 
 local fs = require("@base/fs")
-local worldmanager = require("@bukkit/worldmanager/worldmanager")
+require("@bukkit/worldmanager/index")
 
 
 local resetting = false
 local mainWorld = bukkit.defaultWorld()
 
 local GAME_WORLD_ID = "gameworld"
-local gameWorld = worldmanager.get(GAME_WORLD_ID)
+local gameWorld = bukkit.worldManager.get(GAME_WORLD_ID)
 if gameWorld == nil then
     Bamboo.debug("loading game world")
-    local creator = worldmanager.create(GAME_WORLD_ID)
+    local creator = bukkit.worldManager.create(GAME_WORLD_ID)
     if Bamboo.serviceManager.worldGenOverworld ~= nil then
         creator:setGenerator(Bamboo.serviceManager.worldGenOverworld)
     end
@@ -92,16 +92,16 @@ function FastReset(sender)
     end)
 
     do
-        worldmanager.delete(GAME_WORLD_ID)
+        bukkit.worldManager.delete(GAME_WORLD_ID)
         doTitle(1, 6)
-        local creator = worldmanager.create(GAME_WORLD_ID)
+        local creator = bukkit.worldManager.create(GAME_WORLD_ID)
         gameWorld = creator:create()
     end
     doTitle(2, 6)
     do
-        worldmanager.delete("world_nether")
+        bukkit.worldManager.delete("world_nether")
         doTitle(3, 6)
-        local creator = worldmanager.create("world_nether")
+        local creator = bukkit.worldManager.create("world_nether")
         creator:setEnvironment(-1)
         if Bamboo.serviceManager.worldGenNether ~= nil then
             creator:setGenerator(Bamboo.serviceManager.worldGenNether)
@@ -110,9 +110,9 @@ function FastReset(sender)
     end
     doTitle(4, 6)
     do
-        worldmanager.delete("world_the_end")
+        bukkit.worldManager.delete("world_the_end")
         doTitle(5, 6)
-        local creator = worldmanager.create("world_the_end")
+        local creator = bukkit.worldManager.create("world_the_end")
         creator:setEnvironment(1)
         if Bamboo.serviceManager.worldGenEnd ~= nil then
             creator:setGenerator(Bamboo.serviceManager.worldGenEnd)
