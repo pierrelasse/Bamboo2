@@ -1,12 +1,10 @@
 local guimaker = require("@bukkit/guimaker/guimaker")
-local uihelper = require("@bukkit/guimaker/uihelper")
-local item = uihelper.item
 
 
 local screens = {
-    item = item,
-
-    ITM_BG = item("WHITE_STAINED_GLASS_PANE", "§")
+    ITM_BG = bukkit.buildItem("WHITE_STAINED_GLASS_PANE")
+        :hideTooltip()
+        :build()
 }
 
 function screens.makeScreen(title, sizeOrType, bg)
@@ -24,10 +22,6 @@ function screens.makeScreen(title, sizeOrType, bg)
 
         local cb = screen.data["action."..event.slot]
         if cb ~= nil then cb(event) end
-
-        if player.getName() == "pierrelasse" then -- ANCHOR
-            player.sendMessage("§7Clicked "..event.slot)
-        end
     end
 
     return screen
@@ -35,7 +29,7 @@ end
 
 ---@param screen bukkit.guimaker.GUI
 ---@param slot integer
----@param itemStack java.Object?
+---@param itemStack bukkit.ItemStack?
 ---@param cb fun(event: bukkit.guimaker.ClickEvent)
 function screens.button(screen, slot, itemStack, cb)
     screen:set(slot, itemStack)

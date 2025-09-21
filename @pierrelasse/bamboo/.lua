@@ -1,4 +1,5 @@
 require("@base/paman").needs(
+    "bukkit/api",
     "bukkit/worldmanager"
 )
 

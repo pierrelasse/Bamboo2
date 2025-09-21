@@ -2,20 +2,21 @@ local screens = require("@pierrelasse/bamboo/util/screens")
 local paginator = require("@pierrelasse/bamboo/services/core/menu/view/_paginator")
 
 
-local ITM_LEFT = screens.item(
-    "HEAD:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RjOWU0ZGNmYTQyMjFhMWZhZGMxYjViMmIxMWQ4YmVlYjU3ODc5YWYxYzQyMzYyMTQyYmFlMWVkZDUifX19",
-    "§f§l←"
-)
+local ITM_LEFT = bukkit.buildItem("PLAYER_HEAD")
+    :playerHead_texture(
+        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RjOWU0ZGNmYTQyMjFhMWZhZGMxYjViMmIxMWQ4YmVlYjU3ODc5YWYxYzQyMzYyMTQyYmFlMWVkZDUifX19")
+    :displayName("§f§l←")
+    :build()
 
-local ITM_RIGHT = screens.item(
-    "HEAD:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTU2YTM2MTg0NTllNDNiMjg3YjIyYjdlMjM1ZWM2OTk1OTQ1NDZjNmZjZDZkYzg0YmZjYTRjZjMwYWI5MzExIn19fQ==",
-    "§f§l→"
-)
+local ITM_RIGHT = bukkit.buildItem("PLAYER_HEAD")
+    :playerHead_texture(
+        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTU2YTM2MTg0NTllNDNiMjg3YjIyYjdlMjM1ZWM2OTk1OTQ1NDZjNmZjZDZkYzg0YmZjYTRjZjMwYWI5MzExIn19fQ==")
+    :displayName("§f§l→")
+    :build()
 
-
----@param player JavaObject
----@param prevScreenFunc fun(player: JavaObject)
----@param page integer|nil
+---@param player bukkit.entity.Player
+---@param prevScreenFunc fun(player: bukkit.entity.Player)
+---@param page integer?
 local function view(player, prevScreenFunc, page)
     page = page or 1
 
@@ -35,7 +36,10 @@ local function view(player, prevScreenFunc, page)
             local name = (service.enabled and "§a" or "§c")..(service.meta_name or service.id)
             local lore = {}
 
-            local itemStack = screens.item(material, name, lore)
+            local itemStack = bukkit.buildItem(material)
+                :displayName(name)
+                :lore(lore)
+                :build()
             screens.button(screen, slot, itemStack, function(event)
                 if event.type == "LEFT" then
                     service:setEnabled(not service.enabled)
