@@ -14,8 +14,8 @@ local ITM_RIGHT = bukkit.buildItem("PLAYER_HEAD")
     :displayName("§f§l→")
     :build()
 
----@param player JavaObject
----@param prevScreenFunc fun(player: JavaObject)
+---@param player bukkit.entity.Player
+---@param prevScreenFunc fun(player: bukkit.entity.Player)
 ---@param page integer|nil
 local function view(player, prevScreenFunc, page)
     page = page or 1
