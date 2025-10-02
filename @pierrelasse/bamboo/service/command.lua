@@ -51,7 +51,7 @@ addCommand("service", function(sender, args)
         return
     end
 
-    if string.startswith(action, ":") then
+    if string.startsWith(action, ":") then
         local handler
         if service.tasks ~= nil then
             local id = string.sub(action, 2)
@@ -72,7 +72,7 @@ end)
     .permission("op")
     .complete(function(completions, sender, args)
         local function complete(value, i)
-            if args[i] == nil or string.startswith(value, args[i]) then
+            if args[i] == nil or string.startsWith(value, args[i]) then
                 completions.add(value)
             end
         end

@@ -42,7 +42,7 @@ function this.onBlockBreak(event)
     ---@type string?
     local material = this.storage:get(key)
     if material == nil then
-        material = tostring(this.randomMaterials.get(random:randInt(0, this.randomMaterials.size() - 1)))
+        material = tostring(this.randomMaterials.get(random:integer(0, this.randomMaterials.size() - 1)))
         this.storage:set(key, material)
     end
 

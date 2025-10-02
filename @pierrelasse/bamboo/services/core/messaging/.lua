@@ -32,7 +32,7 @@ return function(service)
                     if #args == 1 then
                         for player in bukkit.playersLoop() do
                             local name = player.getName()
-                            if string.startswith(name, args[1]) and sender.canSee(player) then
+                            if string.startsWith(name, args[1]) and sender.canSee(player) then
                                 completions.add(name)
                             end
                         end

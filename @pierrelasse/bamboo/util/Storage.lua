@@ -68,7 +68,7 @@ end
 function Storage:loopKeys(path)
     ---@type java.Set<string>?
     local keys = self:getKeys(path)
-    if keys == nil then return function() return nil end end
+    if keys == nil then return function() return nil, 0 end end
     return forEach(keys)
 end
 
